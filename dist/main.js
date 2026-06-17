@@ -1,24 +1,17 @@
-const task1Name = "Learn TypeScript";
-const task1Priority = 4;
-const task1Completed = false;
-const task2Name = "Walk my dog";
-const task2Priority = 5;
-const task2Completed = false;
-const task3Name = "Brush my teeth";
-const task3Priority = 3;
-const task3Completed = true;
-const completedTasks = 1;
-const totalTasks = 3;
-const completionRate = completedTasks / totalTasks * 100;
-console.log(`Task: ${task1Name} 
-            Priority: ${task1Priority} 
-            Completed: ${task1Completed}`);
-console.log(`Task: ${task2Name} 
-            Priority: ${task2Priority} 
-            Completed: ${task2Completed}`);
-console.log(`Task: ${task3Name} 
-            Priority: ${task3Priority} 
-            Completed: ${task3Completed}`);
-console.log(`Completion rate: ${completionRate}`);
+const tasks = [`Lära mig TypeScript`, `Träna`, `Handla`, `Tvätta`, `Plugga`];
+let tasksCompleted = 2;
+console.log(`===============================`);
+console.log(`Task Tracker`);
+console.log(`===============================`);
+for (let i = 0; i < tasks.length; i++) {
+    console.log(i, tasks[i]);
+}
+console.log(`Antal uppgifter: ${tasks.length}`);
+if (tasksCompleted < tasks.length) {
+    console.log(`Avklarade uppgifter: ${tasksCompleted}`);
+}
+else {
+    console.log("Bra jobbat!");
+}
 export {};
 //# sourceMappingURL=main.js.map

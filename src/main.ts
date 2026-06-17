@@ -1,29 +1,19 @@
-const task1Name: string = "Learn TypeScript";
-const task1Priority: number = 4;
-const task1Completed: boolean = false;
+const tasks: string[] = [`Lära mig TypeScript`, `Träna`, `Handla`, `Tvätta`, `Plugga`];
+let tasksCompleted: number = 2;
 
-const task2Name: string = "Walk my dog";
-const task2Priority: number = 5;
-const task2Completed: boolean = false;
+console.log(`===============================`);
+console.log(`Task Tracker`);
+console.log(`===============================`);
 
-const task3Name: string = "Brush my teeth";
-const task3Priority: number = 3;
-const task3Completed: boolean = true;
+for (let i: number = 0; i < tasks.length; i++) {
+    console.log(i, tasks[i]);
+}
 
-const completedTasks: number = 1;
-const totalTasks: number = 3;
-const completionRate: number = completedTasks / totalTasks * 100;
+console.log(`Antal uppgifter: ${tasks.length}`)
 
-console.log(`Task: ${task1Name} 
-            Priority: ${task1Priority} 
-            Completed: ${task1Completed}`);
-
-console.log(`Task: ${task2Name} 
-            Priority: ${task2Priority} 
-            Completed: ${task2Completed}`);
-
-console.log(`Task: ${task3Name} 
-            Priority: ${task3Priority} 
-            Completed: ${task3Completed}`);
-
-console.log(`Completion rate: ${completionRate}`);
+if (tasksCompleted < tasks.length) {
+    console.log(`Avklarade uppgifter: ${tasksCompleted}`);
+}
+    else {
+        console.log("Bra jobbat!");
+    }
