@@ -24,3 +24,7 @@ showTasksTotal();
 addTask("Hämta bilen");
 showTasks();
 showTasksTotal();
+
+let taskPriority = 4;
+const message = taskPriority >= 5 ? "Obligatoriskt!" : "Frivilligt";
+console.log(message);
