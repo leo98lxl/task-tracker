@@ -1,17 +1,23 @@
 const tasks = [`Lära mig TypeScript`, `Träna`, `Handla`, `Tvätta`, `Plugga`];
-let tasksCompleted = 2;
-console.log(`===============================`);
-console.log(`Task Tracker`);
-console.log(`===============================`);
-for (let i = 0; i < tasks.length; i++) {
-    console.log(i, tasks[i]);
+function showHeader() {
+    console.log(`===============================`);
+    console.log(`Task Tracker`);
+    console.log(`===============================`);
 }
-console.log(`Antal uppgifter: ${tasks.length}`);
-if (tasksCompleted < tasks.length) {
-    console.log(`Avklarade uppgifter: ${tasksCompleted}`);
+function showTasks() {
+    console.log(tasks);
 }
-else {
-    console.log("Bra jobbat!");
+function showTasksTotal() {
+    console.log(`Antal uppgifter: ${tasks.length}`);
 }
+function addTask(taskName) {
+    tasks.push(taskName);
+}
+showHeader();
+showTasks();
+showTasksTotal();
+addTask("Hämta bilen");
+showTasks();
+showTasksTotal();
 export {};
 //# sourceMappingURL=main.js.map

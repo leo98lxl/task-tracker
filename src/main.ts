@@ -1,19 +1,26 @@
-const tasks: string[] = [`Lära mig TypeScript`, `Träna`, `Handla`, `Tvätta`, `Plugga`];
-let tasksCompleted: number = 2;
+const tasks = [`Lära mig TypeScript`, `Träna`, `Handla`, `Tvätta`, `Plugga`];
 
-console.log(`===============================`);
-console.log(`Task Tracker`);
-console.log(`===============================`);
-
-for (let i: number = 0; i < tasks.length; i++) {
-    console.log(i, tasks[i]);
+function showHeader():void {
+    console.log(`===============================`);
+    console.log(`Task Tracker`);
+    console.log(`===============================`);
 }
 
-console.log(`Antal uppgifter: ${tasks.length}`)
-
-if (tasksCompleted < tasks.length) {
-    console.log(`Avklarade uppgifter: ${tasksCompleted}`);
+function showTasks():void {
+    console.log(tasks);
 }
-    else {
-        console.log("Bra jobbat!");
-    }
+
+function showTasksTotal():void {
+    console.log(`Antal uppgifter: ${tasks.length}`);
+}
+
+function addTask(taskName: string):void {
+    tasks.push(taskName);
+}
+
+showHeader();
+showTasks();
+showTasksTotal();
+addTask("Hämta bilen");
+showTasks();
+showTasksTotal();
