@@ -84,3 +84,105 @@ showPendingTasks();
 showStatistics();
 
 console.log(taskNames);
+
+//Tisdag
+
+type Task2 = {
+    name: string;
+    completed: boolean;
+    priority: number;
+};
+
+const task2: Task2 = {
+    name: "TS",
+    completed: true,
+    priority: 5
+};
+
+const tasks2: Task[] = [];
+tasks2.push({
+    name: "Träna",
+    completed: false,
+    priority: 2,
+});
+
+function showTask2(task2: Task2): void {
+    console.log(task2.name);
+}
+
+function addTask2(task2: Task2): void {
+    tasks2.push(task2);
+}
+
+showTask2(task2);
+addTask2({
+    name: "Springa",
+    priority: 3,
+    completed: true
+});
+
+type Username = string;
+
+const user: Username = "Leo";
+
+type Age = number;
+
+const age: Age = 28;
+
+let value: string | number;
+value: 42;
+value: "Hej";
+
+type Id = string | number;
+const userId: Id = 123;
+
+type Task3 = {
+    name: string;
+    status: "pending" | "completed";
+    priority: "low" | "medium" | "high";
+};
+
+function updateStatus(status: "pending" | "completed"): void {
+    console.log(status);
+}
+
+updateStatus("completed");
+
+interface User {
+    name: string;
+    completed: "pending" | "completed";
+    
+    toggle: () => void;
+}
+
+const admin: User = {
+    name: "Leo",
+    completed: "pending",
+
+    toggle() {
+        this.completed = this.completed === "pending" ? "completed" : "pending";
+    },
+};
+
+interface Person {
+    name: string;
+};
+
+interface ContactInfo {
+    email: string;
+}
+
+interface Student extends Person, ContactInfo {
+    course: string;
+}
+
+enum Direction {
+    North,
+    South,
+    West,
+    East
+};
+
+console.log(Direction.East);
+
+type Admin = Username & Age;
