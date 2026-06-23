@@ -4,185 +4,156 @@ function showHeader():void {
     console.log(`===============================`);
 }
 
-type Task = {
-    name: string;
-    completed: boolean;
-    priority?: number;
-}
-
-const tasks: Task[] = [ {
-    name: "Lära mig TS",
-    completed: false,
-    priority: 5, 
-}, {
-    name: "Diska",
-    completed: true, 
-}, {
-    name: "Springa 5 km",
-    completed: false,
-    priority: 4, 
-}
-];
-
-const taskNames = tasks.map(task => task.name);
-
-function addTask(task: Task):void {
-    tasks.push(task);
-}
-
-function showTask(task: Task | undefined):void {
-    console.log(task?.name);
-}
-
-function completeTask(taskName: string):void {
-    for (const task of tasks) {
-        if (task.name === taskName) {
-            task.completed = true;
-        } 
-    }
-}
-
-function showPendingTasks():void {
-    for (const task of tasks) {
-        if (!task.completed) {
-            console.log(task.name);
-        } 
-    }
-}
-
-function showCompletedTasks():void {
-    for (const task of tasks) {
-        if (task.completed) {
-            console.log(task.name);
-        } 
-    }
-}
-
-function showStatistics():void {
-    let completed = 0;
-    let pending = 0;
-    for (const task of tasks) {
-        if (task.completed) {
-            completed++;
-    } else { 
-        pending++;
-    }
-    }
-    console.log(`Completed: ${completed} Pending: ${pending}`);
-}
-
-showHeader();
-showTask(tasks[1]);
-addTask({
-    name: "Gå ut med hunden",
-    completed: false,
-    priority: 2
-});
-completeTask("Springa 5 km");
-showCompletedTasks();
-showPendingTasks();
-showStatistics();
-
-console.log(taskNames);
-
-//Tisdag
-
-type Task2 = {
-    name: string;
-    completed: boolean;
-    priority: number;
-};
-
-const task2: Task2 = {
-    name: "TS",
-    completed: true,
-    priority: 5
-};
-
-const tasks2: Task[] = [];
-tasks2.push({
-    name: "Träna",
-    completed: false,
-    priority: 2,
-});
-
-function showTask2(task2: Task2): void {
-    console.log(task2.name);
-}
-
-function addTask2(task2: Task2): void {
-    tasks2.push(task2);
-}
-
-showTask2(task2);
-addTask2({
-    name: "Springa",
-    priority: 3,
-    completed: true
-});
-
-type Username = string;
-
-const user: Username = "Leo";
-
-type Age = number;
-
-const age: Age = 28;
-
-let value: string | number;
-value: 42;
-value: "Hej";
-
-type Id = string | number;
-const userId: Id = 123;
-
-type Task3 = {
+interface Task {
     name: string;
     status: "pending" | "completed";
     priority: "low" | "medium" | "high";
-};
+    description?: string;
+    notes?: string;
+    dueDate?: number | string;
+    category?: "school" | "spare time";
+    tags?: string;
 
-function updateStatus(status: "pending" | "completed"): void {
-    console.log(status);
-}
-
-updateStatus("completed");
-
-interface User {
-    name: string;
-    completed: "pending" | "completed";
-    
     toggle: () => void;
 }
 
-const admin: User = {
-    name: "Leo",
-    completed: "pending",
+const tasks: Task[] = [{
+    name: "Lära mig TS",
+    status: "pending",
+    priority: "high",
 
     toggle() {
-        this.completed = this.completed === "pending" ? "completed" : "pending";
+        this.category = "school";
     },
-};
+}, {
+    name: "Springa 5 km",
+    status: "completed",
+    priority: "medium",
+    notes: "Tog 10 min",
 
-interface Person {
-    name: string;
-};
+    toggle() {
+        this.description = "Vanliga löparrundan";
+    },
+}, {
+    name: "Städa",
+    status: "pending",
+    priority: "high",
+    description: "Städa förrådet",
 
-interface ContactInfo {
-    email: string;
+    toggle() {
+        this.category = this.category === "school" ? "spare time" : "spare time";
+    },
+}];
+
+function addTask(task: Task) {
+    tasks.push(task);
 }
 
-interface Student extends Person, ContactInfo {
-    course: string;
+function showTasks(): void {
+    console.log(tasks);
 }
 
-enum Direction {
-    North,
-    South,
-    West,
-    East
-};
+function showPendingTasks(): void {
+    for (const task of tasks) {
+        if (task.status === "pending") {
+         console.log(`Pending task: ${task.name}`);
+        }
+    }
+}
 
-console.log(Direction.East);
+function showCompletedTasks(): void {
+    for (const task of tasks) {
+        if (task.status === "completed") {
+         console.log(`Completed task: ${task.name}`);
+        }
+    }
+}
 
-type Admin = Username & Age;
+function showPriorityHigh(): void {
+    for (const task of tasks) {
+        if (task.priority === "high") {
+            console.log(`High priority: ${task.name}`);
+        }
+    }
+}
+
+function completeTask(taskName: string): void {
+    for (const task of tasks) {
+        if (task.name === taskName) {
+            task.status = "completed";
+        }
+    }
+}
+
+function totalTasks(): void {
+    console.log(`Total tasks: ${tasks.length}`);
+}
+
+function showStatus(): void {
+    let completed = 0;
+    let pending = 0;
+    for (const task of tasks) {
+        if (task.status === "completed") {
+            completed++;
+        } else {
+            pending++;
+        }
+    }
+    console.log(`Pending: ${pending} Completed: ${completed}`);
+}
+
+function showPriority(): void {
+    let prioLow = 0;
+    let prioMedium = 0;
+    let prioHigh = 0;
+    for (const task of tasks) {
+        if (task.priority === "high") {
+            prioHigh++;
+        } else if (task.priority === "medium") {
+            prioMedium++;
+        } else {
+            prioLow++;
+        }
+    }
+    console.log(`High: ${prioHigh} Medium: ${prioMedium} Low: ${prioLow}`);
+}
+
+addTask({
+    name: "Träna",
+    status: "pending",
+    priority: "low",
+
+    toggle() {
+        this.name = "Träna med flickvännen";
+    },
+});
+addTask({
+    name: "Hoppa hopprep",
+    status: "completed",
+    priority: "medium",
+    description: "Det säger sig självt",
+    notes: "Jag fastnade i repet",
+
+    toggle() {
+        this.notes = "Det gjorde ont";
+    },
+});
+addTask({
+    name: "Hämta posten",
+    status: "pending",
+    priority: "low",
+    category: "spare time",
+    dueDate: 2026,
+
+    toggle() {
+        this.tags = "Post från Cubus";
+    },
+})
+showHeader();
+showTasks();
+showPendingTasks();
+showCompletedTasks();
+showPriorityHigh();
+totalTasks();
+showStatus();
+showPriority();

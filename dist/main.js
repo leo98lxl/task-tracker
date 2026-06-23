@@ -5,119 +5,130 @@ function showHeader() {
 }
 const tasks = [{
         name: "Lära mig TS",
-        completed: false,
-        priority: 5,
-    }, {
-        name: "Diska",
-        completed: true,
+        status: "pending",
+        priority: "high",
+        toggle() {
+            this.category = "school";
+        },
     }, {
         name: "Springa 5 km",
-        completed: false,
-        priority: 4,
-    }
-];
-const taskNames = tasks.map(task => task.name);
+        status: "completed",
+        priority: "medium",
+        notes: "Tog 10 min",
+        toggle() {
+            this.description = "Vanliga löparrundan";
+        },
+    }, {
+        name: "Städa",
+        status: "pending",
+        priority: "high",
+        description: "Städa förrådet",
+        toggle() {
+            this.category = this.category === "school" ? "spare time" : "spare time";
+        },
+    }];
 function addTask(task) {
     tasks.push(task);
 }
-function showTask(task) {
-    console.log(task?.name);
-}
-function completeTask(taskName) {
-    for (const task of tasks) {
-        if (task.name === taskName) {
-            task.completed = true;
-        }
-    }
+function showTasks() {
+    console.log(tasks);
 }
 function showPendingTasks() {
     for (const task of tasks) {
-        if (!task.completed) {
-            console.log(task.name);
+        if (task.status === "pending") {
+            console.log(`Pending task: ${task.name}`);
         }
     }
 }
 function showCompletedTasks() {
     for (const task of tasks) {
-        if (task.completed) {
-            console.log(task.name);
+        if (task.status === "completed") {
+            console.log(`Completed task: ${task.name}`);
         }
     }
 }
-function showStatistics() {
+function showPriorityHigh() {
+    for (const task of tasks) {
+        if (task.priority === "high") {
+            console.log(`High priority: ${task.name}`);
+        }
+    }
+}
+function completeTask(taskName) {
+    for (const task of tasks) {
+        if (task.name === taskName) {
+            task.status = "completed";
+        }
+    }
+}
+function totalTasks() {
+    console.log(`Total tasks: ${tasks.length}`);
+}
+function showStatus() {
     let completed = 0;
     let pending = 0;
     for (const task of tasks) {
-        if (task.completed) {
+        if (task.status === "completed") {
             completed++;
         }
         else {
             pending++;
         }
     }
-    console.log(`Completed: ${completed} Pending: ${pending}`);
+    console.log(`Pending: ${pending} Completed: ${completed}`);
 }
-showHeader();
-showTask(tasks[1]);
+function showPriority() {
+    let prioLow = 0;
+    let prioMedium = 0;
+    let prioHigh = 0;
+    for (const task of tasks) {
+        if (task.priority === "high") {
+            prioHigh++;
+        }
+        else if (task.priority === "medium") {
+            prioMedium++;
+        }
+        else {
+            prioLow++;
+        }
+    }
+    console.log(`High: ${prioHigh} Medium: ${prioMedium} Low: ${prioLow}`);
+}
 addTask({
-    name: "Gå ut med hunden",
-    completed: false,
-    priority: 2
-});
-completeTask("Springa 5 km");
-showCompletedTasks();
-showPendingTasks();
-showStatistics();
-console.log(taskNames);
-const task2 = {
-    name: "TS",
-    completed: true,
-    priority: 5
-};
-const tasks2 = [];
-tasks2.push({
     name: "Träna",
-    completed: false,
-    priority: 2,
-});
-function showTask2(task2) {
-    console.log(task2.name);
-}
-function addTask2(task2) {
-    tasks2.push(task2);
-}
-showTask2(task2);
-addTask2({
-    name: "Springa",
-    priority: 3,
-    completed: true
-});
-const user = "Leo";
-const age = 28;
-let value;
-value: 42;
-value: "Hej";
-const userId = 123;
-function updateStatus(status) {
-    console.log(status);
-}
-updateStatus("completed");
-const admin = {
-    name: "Leo",
-    completed: "pending",
+    status: "pending",
+    priority: "low",
     toggle() {
-        this.completed = this.completed === "pending" ? "completed" : "pending";
+        this.name = "Träna med flickvännen";
     },
-};
-;
-var Direction;
-(function (Direction) {
-    Direction[Direction["North"] = 0] = "North";
-    Direction[Direction["South"] = 1] = "South";
-    Direction[Direction["West"] = 2] = "West";
-    Direction[Direction["East"] = 3] = "East";
-})(Direction || (Direction = {}));
-;
-console.log(Direction.East);
+});
+addTask({
+    name: "Hoppa hopprep",
+    status: "completed",
+    priority: "medium",
+    description: "Det säger sig självt",
+    notes: "Jag fastnade i repet",
+    toggle() {
+        this.notes = "Det gjorde ont";
+    },
+});
+addTask({
+    name: "Hämta posten",
+    status: "pending",
+    priority: "low",
+    category: "spare time",
+    dueDate: 2026,
+    toggle() {
+        this.tags = "Post från Cubus";
+    },
+});
+showHeader();
+showTasks();
+showPendingTasks();
+showCompletedTasks();
+showPriorityHigh();
+totalTasks();
+showStatus();
+showPriority();
 export {};
 //# sourceMappingURL=main.js.map
