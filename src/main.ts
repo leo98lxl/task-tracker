@@ -150,7 +150,7 @@ addTask({
     },
 })
 
-const app = document.querySelector("#app");
+const app = document.querySelector("#app") as HTMLDivElement;
 
 function renderTasks(): void {
     if (app) {
