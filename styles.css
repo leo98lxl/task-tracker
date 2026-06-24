@@ -1,5 +1,23 @@
-.jobs {
-    border: 1px solid blue;
-    padding: 1rem;
-    border-inline-start: 3px solid orange;
+.task-title {
+    padding-block: 1rem;
+    border-block-end: 3px solid orange;
+    width: fit-content;
+    text-transform: uppercase;
+}
+
+.task-priority-high {
+    color: firebrick;
+    font-weight: 800;
+}
+
+.task-btn {
+    background-color: orange;
+    padding-inline: 1rem;
+    margin-inline: 0.5rem;
+    border-radius: 1ch;
+
+    &:hover, :focus-visible {
+        color: white;
+        cursor: pointer;
+    }
 }

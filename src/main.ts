@@ -4,7 +4,7 @@ function showHeader():void {
     console.log(`===============================`);
 }
 
-interface Task {
+type Task = {
     name: string;
     status: "pending" | "completed";
     priority: "low" | "medium" | "high";
@@ -18,7 +18,7 @@ interface Task {
 }
 
 const tasks: Task[] = [{
-    name: "Lära mig TS",
+    name: "Lära mig TypeScript",
     status: "pending",
     priority: "high",
 
@@ -140,7 +140,7 @@ addTask({
 });
 addTask({
     name: "Hämta posten",
-    status: "pending",
+    status: "completed",
     priority: "low",
     category: "spare time",
     dueDate: 2026,
@@ -149,54 +149,49 @@ addTask({
         this.tags = "Post från Cubus";
     },
 })
-showHeader();
-showTasks();
-showPendingTasks();
-showCompletedTasks();
-showPriorityHigh();
-totalTasks();
-showStatus();
-showPriority();
-
-const title = document.querySelector("#title") as HTMLHeadingElement;
-title.textContent = "Ny titel";
 
 const app = document.querySelector("#app");
-const div = document.createElement("div");
 
-div.innerHTML = "<h1>Welcome!</h1>";
-
-app?.append(div);
-
-const jobs = [
-    "Work",
-    "Working",
-    "Still working"
-];
-
-function renderJobs(): void {
+function renderTasks(): void {
     if (app) {
         app.innerHTML = "";
     }
-    for (const job of jobs) {
-        const div = document.createElement("div");
-        div.textContent = job;
-        div.classList.add("jobs");
+    
+    const total = document.createElement("h2");
+    total.textContent = `Total tasks: ${tasks.length}`
+
+    app?.append(total);
+
+    for (const task of tasks) {
+        const name = document.createElement("h3");
+        name.textContent = task.name;
+        name.classList.add("task-title");
+
+        const status = document.createElement("p");
+        status.textContent = `Status: ${task.status}`;
+
+        const priority = document.createElement("p");
+        priority.textContent = `Priority: ${task.priority}`;
+        if (task.priority === "high") {
+            priority.classList.add("task-priority-high");
+        }
 
         const completeButton = document.createElement("button");
         completeButton.textContent = "Complete";
-        completeButton.classList.add("btn");
+        completeButton.classList.add("task-btn");
 
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
-        deleteButton.classList.add("btn");
+        deleteButton.classList.add("task-btn");
 
-        div.append(
+        app?.append(
+            name,
+            status,
+            priority,
             completeButton,
-            deleteButton);
-
-        app?.append(div);
+            deleteButton
+        );
     }
 }
 
-renderJobs();
+renderTasks();
