@@ -1,0 +1,5 @@
+.jobs {
+    border: 1px solid blue;
+    padding: 1rem;
+    border-inline-start: 3px solid orange;
+}

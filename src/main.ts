@@ -157,3 +157,46 @@ showPriorityHigh();
 totalTasks();
 showStatus();
 showPriority();
+
+const title = document.querySelector("#title") as HTMLHeadingElement;
+title.textContent = "Ny titel";
+
+const app = document.querySelector("#app");
+const div = document.createElement("div");
+
+div.innerHTML = "<h1>Welcome!</h1>";
+
+app?.append(div);
+
+const jobs = [
+    "Work",
+    "Working",
+    "Still working"
+];
+
+function renderJobs(): void {
+    if (app) {
+        app.innerHTML = "";
+    }
+    for (const job of jobs) {
+        const div = document.createElement("div");
+        div.textContent = job;
+        div.classList.add("jobs");
+
+        const completeButton = document.createElement("button");
+        completeButton.textContent = "Complete";
+        completeButton.classList.add("btn");
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.classList.add("btn");
+
+        div.append(
+            completeButton,
+            deleteButton);
+
+        app?.append(div);
+    }
+}
+
+renderJobs();
