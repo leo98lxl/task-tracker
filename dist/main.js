@@ -35,9 +35,9 @@ taskButton.addEventListener("click", () => {
         return;
     }
     const priority = priorityInput.value;
-    addTask(taskName, priority);
+    newTask(taskName, priority);
 });
-function addTask(name, priority) {
+function newTask(name, priority) {
     const newTask = {
         id: nextId,
         name: name,
@@ -57,7 +57,7 @@ function toggleTask(id) {
     }
     renderTasks();
 }
-function deleteTask(id) {
+function removeTask(id) {
     tasks = tasks.filter((task) => task.id !== id);
     renderTasks();
 }
@@ -67,17 +67,18 @@ function renderTasks() {
     }
     const total = document.createElement("h2");
     total.textContent = `Total tasks: ${tasks.length}`;
+    app?.append(total);
     for (const task of tasks) {
         const card = document.createElement("div");
         card.classList.add("task-card");
+        if (task.status === "completed") {
+            card.classList.add("completed-task");
+        }
         const name = document.createElement("h3");
         name.textContent = task.name;
         name.classList.add("task-title");
         const status = document.createElement("p");
         status.textContent = `Status: ${task.status}`;
-        if (task.status === "completed") {
-            status.classList.add("completed-task");
-        }
         const priority = document.createElement("p");
         priority.textContent = `Priority: ${task.priority}`;
         if (task.priority === "high") {
@@ -93,14 +94,15 @@ function renderTasks() {
         deleteButton.textContent = "Delete";
         deleteButton.classList.add("task-btn");
         deleteButton.addEventListener("click", () => {
-            deleteTask(task.id);
+            removeTask(task.id);
         });
-        app?.prepend(total, name, status, priority, completeButton, deleteButton);
+        card.append(name, status, priority, completeButton, deleteButton);
+        app.prepend(card);
     }
 }
-addTask("Träna", "high");
-addTask("Hoppa hopprep", "medium");
-addTask("Hämta posten", "low");
+newTask("Träna", "high");
+newTask("Hoppa hopprep", "medium");
+newTask("Hämta posten", "low");
 export {};
 // function showTasks(): void {
 //     console.log(tasks);

@@ -58,10 +58,10 @@ taskButton.addEventListener("click", () => {
     }
     
     const priority = priorityInput.value as TaskPriority;
-    addTask(taskName, priority);
+    newTask(taskName, priority);
 })
 
-function addTask(name: string, priority: TaskPriority): void {
+function newTask(name: string, priority: TaskPriority): void {
     const newTask: Task = {
         id: nextId,
         name: name,
@@ -84,7 +84,7 @@ function toggleTask(id: number): void {
     renderTasks();
 }
 
-function deleteTask(id: number): void {
+function removeTask(id: number): void {
     tasks = tasks.filter((task) => task.id !== id);
 
     renderTasks();
@@ -97,10 +97,15 @@ function renderTasks(): void {
            
     const total = document.createElement("h2");
     total.textContent = `Total tasks: ${tasks.length}`
+   
+    app?.append(total);
 
     for (const task of tasks) {
         const card = document.createElement("div");
         card.classList.add("task-card");
+        if (task.status === "completed") {
+            card.classList.add("completed-task");
+        }
 
         const name = document.createElement("h3");
         name.textContent = task.name;
@@ -108,9 +113,6 @@ function renderTasks(): void {
 
         const status = document.createElement("p");
         status.textContent = `Status: ${task.status}`;
-        if (task.status === "completed") {
-            status.classList.add("completed-task")
-        }
         
         const priority = document.createElement("p");
         priority.textContent = `Priority: ${task.priority}`;
@@ -129,23 +131,24 @@ function renderTasks(): void {
         deleteButton.textContent = "Delete";
         deleteButton.classList.add("task-btn");
         deleteButton.addEventListener("click", () => {
-            deleteTask(task.id);
+            removeTask(task.id);
         })
 
-        app?.prepend(
-            total,
+        card.append(
             name,
             status,
             priority,
             completeButton,
             deleteButton
         );
+
+        app.prepend(card);
     }
 }
 
-addTask("Träna", "high");
-addTask("Hoppa hopprep", "medium");
-addTask("Hämta posten", "low");
+newTask("Träna", "high");
+newTask("Hoppa hopprep", "medium");
+newTask("Hämta posten", "low");
 
 // function showTasks(): void {
 //     console.log(tasks);

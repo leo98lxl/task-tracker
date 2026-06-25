@@ -1,23 +1,28 @@
+.completed-task {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
 .task-title {
     padding-block: 1rem;
-    border-block-end: 3px solid orange;
+    border-block-end: 3px solid hsl(39, 100%, 50%);
     width: fit-content;
     text-transform: uppercase;
 }
 
 .task-priority-high {
-    color: firebrick;
+    color: hsl(0, 68%, 42%);
     font-weight: 800;
 }
 
 .task-btn {
-    background-color: orange;
+    background-color: hsl(39, 100%, 50%);
     padding-inline: 1rem;
     margin-inline: 0.5rem;
     border-radius: 1ch;
 
     &:hover, :focus-visible {
-        color: white;
+        color: hsl(0, 0%, 100%);
         cursor: pointer;
     }
 }
