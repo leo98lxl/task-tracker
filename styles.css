@@ -6,12 +6,16 @@ label {
     padding-inline-start: 1rem;
 }
 
+.app {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+}
+
 .task-card {
     background-color: hsl(0, 0%, 100%);
     border: 2px solid hsl(0, 0%, 66%);
     border-radius: 1ch;
     padding: 1rem;
-    width: fit-content;
     margin: 1rem;
 }
 
