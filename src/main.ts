@@ -4,6 +4,8 @@ function showHeader():void {
     console.log(`===============================`);
 }
 
+showHeader();
+
 type Task = {
     id: number;
     name: string;
@@ -14,239 +16,62 @@ type Task = {
     dueDate?: number | string;
     category?: "school" | "spare time";
     tags?: string;
-
-    toggle: () => void;
 }
 
 type TaskPriority = "low" | "medium" | "high";
 
 let nextId = 1;
+
 let tasks: Task[] = [{
-    id: nextId,
+    id: nextId++,
     name: "Lära mig TypeScript",
     status: "pending",
     priority: "high",
-    toggle() {
-        this.category = "school";
-    },
 }, {
-    id: nextId,
+    id: nextId++,
     name: "Springa 5 km",
     status: "completed",
     priority: "medium",
     notes: "Tog 10 min",
-    toggle() {
-        this.description = "Vanliga löparrundan";
-    },
 }, {
-    id: nextId,
+    id: nextId++,
     name: "Städa",
     status: "pending",
     priority: "high",
     description: "Städa förrådet",
-    toggle() {
-        this.category = this.category === "school" ? "spare time" : "spare time";
-    },
 }];
-
-function addTask(task: Task) {
-    tasks.push(task);
-}
-
-function showTasks(): void {
-    console.log(tasks);
-}
-
-function showPendingTasks(): void {
-    for (const task of tasks) {
-        if (task.status === "pending") {
-         console.log(`Pending task: ${task.name}`);
-        }
-    }
-}
-
-function showCompletedTasks(): void {
-    for (const task of tasks) {
-        if (task.status === "completed") {
-         console.log(`Completed task: ${task.name}`);
-        }
-    }
-}
-
-function showPriorityHigh(): void {
-    for (const task of tasks) {
-        if (task.priority === "high") {
-            console.log(`High priority: ${task.name}`);
-        }
-    }
-}
-
-// function completeTask(taskName: string): void {
-//     for (const task of tasks) {
-//         if (task.name === taskName) {
-//             task.status = "completed";
-//         }
-//     }
-//     renderTasks();
-// }
-
-function totalTasks(): void {
-    console.log(`Total tasks: ${tasks.length}`);
-}
-
-function showStatus(): void {
-    let completed = 0;
-    let pending = 0;
-    for (const task of tasks) {
-        if (task.status === "completed") {
-            completed++;
-        } else {
-            pending++;
-        }
-    }
-    console.log(`Pending: ${pending} Completed: ${completed}`);
-}
-
-function showPriority(): void {
-    let prioLow = 0;
-    let prioMedium = 0;
-    let prioHigh = 0;
-    for (const task of tasks) {
-        if (task.priority === "high") {
-            prioHigh++;
-        } else if (task.priority === "medium") {
-            prioMedium++;
-        } else {
-            prioLow++;
-        }
-    }
-    console.log(`High: ${prioHigh} Medium: ${prioMedium} Low: ${prioLow}`);
-}
-
-addTask({
-    id: nextId,
-    name: "Träna",
-    status: "pending",
-    priority: "low",
-
-    toggle() {
-        this.name = "Träna med flickvännen";
-    },
-});
-addTask({
-    id: nextId,
-    name: "Hoppa hopprep",
-    status: "completed",
-    priority: "medium",
-    description: "Det säger sig självt",
-    notes: "Jag fastnade i repet",
-
-    toggle() {
-        this.notes = "Det gjorde ont";
-    },
-});
-addTask({
-    id: nextId,
-    name: "Hämta posten",
-    status: "completed",
-    priority: "low",
-    category: "spare time",
-    dueDate: 2026,
-
-    toggle() {
-        this.tags = "Post från Cubus";
-    },
-})
 
 const app = document.querySelector("#app") as HTMLDivElement;
 
-function renderTasks(): void {
-    if (app) {
-        app.innerHTML = "";
-    }
-    
-    const total = document.createElement("h2");
-    total.textContent = `Total tasks: ${tasks.length}`
-
-    app?.append(total);
-
-    for (const task of tasks) {
-        const name = document.createElement("h3");
-        name.textContent = task.name;
-        name.classList.add("task-title");
-
-        const status = document.createElement("p");
-        status.textContent = `Status: ${task.status}`;
-
-        const priority = document.createElement("p");
-        priority.textContent = `Priority: ${task.priority}`;
-        if (task.priority === "high") {
-            priority.classList.add("task-priority-high");
-        }
-        if (task.status === "completed") {
-
-        }
-
-        const completeButton = document.createElement("button");
-        completeButton.textContent = task.status === "pending" ? "Complete" : "Undo";
-        completeButton.classList.add("task-btn");
-        completeButton.addEventListener("click", () => {
-            toggleTask(task.id);
-        })
-
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.classList.add("task-btn");
-        deleteButton.addEventListener("click", () => {
-            deleteTask(task.id);
-        })
-
-        app?.append(
-            name,
-            status,
-            priority,
-            completeButton,
-            deleteButton
-        );
-    }
-}
-
-renderTasks();
-
-
 const taskInput = document.querySelector("#task-input") as HTMLInputElement;
 
-const testButton = document.querySelector("#test-button") as HTMLButtonElement;
+const taskButton = document.querySelector("#task-button") as HTMLButtonElement;
 
 const priorityInput = document.querySelector("#priority-input") as HTMLSelectElement;
 
-testButton.addEventListener("click", () => {
+taskButton.addEventListener("click", () => {
     const taskName = taskInput.value.trim();
     if (taskName === "") {
         console.log("Task name is required.");
+        alert("Please enter a task name.");
         return;
     }
     
     const priority = priorityInput.value as TaskPriority;
-    newTask(taskName, priority);
+    addTask(taskName, priority);
 })
 
-function newTask(name: string, priority: TaskPriority): void {
+function addTask(name: string, priority: TaskPriority): void {
     const newTask: Task = {
         id: nextId,
         name: name,
         status: "pending",
         priority: priority,
-        
-        toggle() {
-        this.category = "school";
-    },
     }
 
     tasks.push(newTask);
     nextId++;
     renderTasks();
-
     taskInput.value = "";
 }
 
@@ -264,3 +89,121 @@ function deleteTask(id: number): void {
 
     renderTasks();
 }
+
+function renderTasks(): void {
+    if (app) {
+        app.innerHTML = "";
+    }
+           
+    const total = document.createElement("h2");
+    total.textContent = `Total tasks: ${tasks.length}`
+
+    for (const task of tasks) {
+        const card = document.createElement("div");
+        card.classList.add("task-card");
+
+        const name = document.createElement("h3");
+        name.textContent = task.name;
+        name.classList.add("task-title");
+
+        const status = document.createElement("p");
+        status.textContent = `Status: ${task.status}`;
+        if (task.status === "completed") {
+            status.classList.add("completed-task")
+        }
+        
+        const priority = document.createElement("p");
+        priority.textContent = `Priority: ${task.priority}`;
+        if (task.priority === "high") {
+            priority.classList.add("task-priority-high");
+        }
+
+        const completeButton = document.createElement("button");
+        completeButton.textContent = task.status === "pending" ? "Complete" : "Undo";
+        completeButton.classList.add("task-btn");
+        completeButton.addEventListener("click", () => {
+            toggleTask(task.id);
+        })
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.classList.add("task-btn");
+        deleteButton.addEventListener("click", () => {
+            deleteTask(task.id);
+        })
+
+        app?.prepend(
+            total,
+            name,
+            status,
+            priority,
+            completeButton,
+            deleteButton
+        );
+    }
+}
+
+addTask("Träna", "high");
+addTask("Hoppa hopprep", "medium");
+addTask("Hämta posten", "low");
+
+// function showTasks(): void {
+//     console.log(tasks);
+// }
+
+// function showPendingTasks(): void {
+//     for (const task of tasks) {
+//         if (task.status === "pending") {
+//          console.log(`Pending task: ${task.name}`);
+//         }
+//     }
+// }
+
+// function showCompletedTasks(): void {
+//     for (const task of tasks) {
+//         if (task.status === "completed") {
+//          console.log(`Completed task: ${task.name}`);
+//         }
+//     }
+// }
+
+// function showPriorityHigh(): void {
+//     for (const task of tasks) {
+//         if (task.priority === "high") {
+//             console.log(`High priority: ${task.name}`);
+//         }
+//     }
+// }
+
+// function totalTasks(): void {
+//     console.log(`Total tasks: ${tasks.length}`);
+// }
+
+// function showStatus(): void {
+//     let completed = 0;
+//     let pending = 0;
+//     for (const task of tasks) {
+//         if (task.status === "completed") {
+//             completed++;
+//         } else {
+//             pending++;
+//         }
+//     }
+//     console.log(`Pending: ${pending} Completed: ${completed}`);
+// }
+
+// function showPriority(): void {
+//     let prioLow = 0;
+//     let prioMedium = 0;
+//     let prioHigh = 0;
+//     for (const task of tasks) {
+//         if (task.priority === "high") {
+//             prioHigh++;
+//         } else if (task.priority === "medium") {
+//             prioMedium++;
+//         } else {
+//             prioLow++;
+//         }
+//     }
+//     console.log(`High: ${prioHigh} Medium: ${prioMedium} Low: ${prioLow}`);
+// }

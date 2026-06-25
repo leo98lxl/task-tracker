@@ -10,14 +10,18 @@
 <body>
     <h1 id="title">Task Tracker</h1>
 
-    <input id="task-input" type="text" placeholder="New task" />
-    <select id="priority-input">
+    <input id="task-input" type="text" placeholder="Enter new task" required/>
+
+    <label for="priority-input">Select priority:</label>
+    <select id="priority-input" required>
         <option value="low">Low</option>
-        <option value="medium">Medium</option>
+        <option value="medium" selected>Medium</option>
         <option value="high">High</option>
     </select>
-    <button id="test-button">Add task</button>
 
-    <div id="app"></div>
+    <button id="task-button">Add task</button>
+
+    <div id="app">
+    </div>
 </body>
 </html>
