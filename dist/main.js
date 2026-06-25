@@ -3,7 +3,9 @@ function showHeader() {
     console.log(`Task Tracker`);
     console.log(`===============================`);
 }
-const tasks = [{
+let nextId = 1;
+let tasks = [{
+        id: nextId,
         name: "Lära mig TypeScript",
         status: "pending",
         priority: "high",
@@ -11,6 +13,7 @@ const tasks = [{
             this.category = "school";
         },
     }, {
+        id: nextId,
         name: "Springa 5 km",
         status: "completed",
         priority: "medium",
@@ -19,6 +22,7 @@ const tasks = [{
             this.description = "Vanliga löparrundan";
         },
     }, {
+        id: nextId,
         name: "Städa",
         status: "pending",
         priority: "high",
@@ -54,13 +58,14 @@ function showPriorityHigh() {
         }
     }
 }
-function completeTask(taskName) {
-    for (const task of tasks) {
-        if (task.name === taskName) {
-            task.status = "completed";
-        }
-    }
-}
+// function completeTask(taskName: string): void {
+//     for (const task of tasks) {
+//         if (task.name === taskName) {
+//             task.status = "completed";
+//         }
+//     }
+//     renderTasks();
+// }
 function totalTasks() {
     console.log(`Total tasks: ${tasks.length}`);
 }
@@ -95,6 +100,7 @@ function showPriority() {
     console.log(`High: ${prioHigh} Medium: ${prioMedium} Low: ${prioLow}`);
 }
 addTask({
+    id: nextId,
     name: "Träna",
     status: "pending",
     priority: "low",
@@ -103,6 +109,7 @@ addTask({
     },
 });
 addTask({
+    id: nextId,
     name: "Hoppa hopprep",
     status: "completed",
     priority: "medium",
@@ -113,6 +120,7 @@ addTask({
     },
 });
 addTask({
+    id: nextId,
     name: "Hämta posten",
     status: "completed",
     priority: "low",
@@ -141,15 +149,62 @@ function renderTasks() {
         if (task.priority === "high") {
             priority.classList.add("task-priority-high");
         }
+        if (task.status === "completed") {
+        }
         const completeButton = document.createElement("button");
-        completeButton.textContent = "Complete";
+        completeButton.textContent = task.status === "pending" ? "Complete" : "Undo";
         completeButton.classList.add("task-btn");
+        completeButton.addEventListener("click", () => {
+            toggleTask(task.id);
+        });
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         deleteButton.classList.add("task-btn");
+        deleteButton.addEventListener("click", () => {
+            deleteTask(task.id);
+        });
         app?.append(name, status, priority, completeButton, deleteButton);
     }
 }
 renderTasks();
+const taskInput = document.querySelector("#task-input");
+const testButton = document.querySelector("#test-button");
+const priorityInput = document.querySelector("#priority-input");
+testButton.addEventListener("click", () => {
+    const taskName = taskInput.value.trim();
+    if (taskName === "") {
+        console.log("Task name is required.");
+        return;
+    }
+    const priority = priorityInput.value;
+    newTask(taskName, priority);
+});
+function newTask(name, priority) {
+    const newTask = {
+        id: nextId,
+        name: name,
+        status: "pending",
+        priority: priority,
+        toggle() {
+            this.category = "school";
+        },
+    };
+    tasks.push(newTask);
+    nextId++;
+    renderTasks();
+    taskInput.value = "";
+}
+function toggleTask(id) {
+    for (const task of tasks) {
+        if (task.id === id) {
+            task.status = task.status === "pending" ? "completed" : "pending";
+        }
+    }
+    renderTasks();
+}
+function deleteTask(id) {
+    tasks = tasks.filter((task) => task.id !== id);
+    renderTasks();
+}
 export {};
 //# sourceMappingURL=main.js.map

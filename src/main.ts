@@ -5,6 +5,7 @@ function showHeader():void {
 }
 
 type Task = {
+    id: number;
     name: string;
     status: "pending" | "completed";
     priority: "low" | "medium" | "high";
@@ -17,29 +18,32 @@ type Task = {
     toggle: () => void;
 }
 
-const tasks: Task[] = [{
+type TaskPriority = "low" | "medium" | "high";
+
+let nextId = 1;
+let tasks: Task[] = [{
+    id: nextId,
     name: "Lära mig TypeScript",
     status: "pending",
     priority: "high",
-
     toggle() {
         this.category = "school";
     },
 }, {
+    id: nextId,
     name: "Springa 5 km",
     status: "completed",
     priority: "medium",
     notes: "Tog 10 min",
-
     toggle() {
         this.description = "Vanliga löparrundan";
     },
 }, {
+    id: nextId,
     name: "Städa",
     status: "pending",
     priority: "high",
     description: "Städa förrådet",
-
     toggle() {
         this.category = this.category === "school" ? "spare time" : "spare time";
     },
@@ -77,13 +81,14 @@ function showPriorityHigh(): void {
     }
 }
 
-function completeTask(taskName: string): void {
-    for (const task of tasks) {
-        if (task.name === taskName) {
-            task.status = "completed";
-        }
-    }
-}
+// function completeTask(taskName: string): void {
+//     for (const task of tasks) {
+//         if (task.name === taskName) {
+//             task.status = "completed";
+//         }
+//     }
+//     renderTasks();
+// }
 
 function totalTasks(): void {
     console.log(`Total tasks: ${tasks.length}`);
@@ -119,6 +124,7 @@ function showPriority(): void {
 }
 
 addTask({
+    id: nextId,
     name: "Träna",
     status: "pending",
     priority: "low",
@@ -128,6 +134,7 @@ addTask({
     },
 });
 addTask({
+    id: nextId,
     name: "Hoppa hopprep",
     status: "completed",
     priority: "medium",
@@ -139,6 +146,7 @@ addTask({
     },
 });
 addTask({
+    id: nextId,
     name: "Hämta posten",
     status: "completed",
     priority: "low",
@@ -175,14 +183,23 @@ function renderTasks(): void {
         if (task.priority === "high") {
             priority.classList.add("task-priority-high");
         }
+        if (task.status === "completed") {
+
+        }
 
         const completeButton = document.createElement("button");
-        completeButton.textContent = "Complete";
+        completeButton.textContent = task.status === "pending" ? "Complete" : "Undo";
         completeButton.classList.add("task-btn");
+        completeButton.addEventListener("click", () => {
+            toggleTask(task.id);
+        })
 
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         deleteButton.classList.add("task-btn");
+        deleteButton.addEventListener("click", () => {
+            deleteTask(task.id);
+        })
 
         app?.append(
             name,
@@ -195,3 +212,55 @@ function renderTasks(): void {
 }
 
 renderTasks();
+
+
+const taskInput = document.querySelector("#task-input") as HTMLInputElement;
+
+const testButton = document.querySelector("#test-button") as HTMLButtonElement;
+
+const priorityInput = document.querySelector("#priority-input") as HTMLSelectElement;
+
+testButton.addEventListener("click", () => {
+    const taskName = taskInput.value.trim();
+    if (taskName === "") {
+        console.log("Task name is required.");
+        return;
+    }
+    
+    const priority = priorityInput.value as TaskPriority;
+    newTask(taskName, priority);
+})
+
+function newTask(name: string, priority: TaskPriority): void {
+    const newTask: Task = {
+        id: nextId,
+        name: name,
+        status: "pending",
+        priority: priority,
+        
+        toggle() {
+        this.category = "school";
+    },
+    }
+
+    tasks.push(newTask);
+    nextId++;
+    renderTasks();
+
+    taskInput.value = "";
+}
+
+function toggleTask(id: number): void {
+    for (const task of tasks) {
+        if (task.id === id) {
+            task.status = task.status === "pending" ? "completed" : "pending";
+        }
+    }
+    renderTasks();
+}
+
+function deleteTask(id: number): void {
+    tasks = tasks.filter((task) => task.id !== id);
+
+    renderTasks();
+}
