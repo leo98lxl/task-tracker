@@ -3,6 +3,12 @@
     text-decoration: line-through;
 }
 
+.priority-input, .task-input {
+    padding: 0.5rem;
+    border: 2px solid hsl(0, 0%, 0%);
+    border-radius: 1ch;
+}
+
 .task-title {
     padding-block: 1rem;
     border-block-end: 3px solid hsl(39, 100%, 50%);
@@ -17,7 +23,8 @@
 
 .task-btn {
     background-color: hsl(39, 100%, 50%);
-    padding-inline: 1rem;
+    padding-inline: 2ch;
+    padding-block: 1ch;
     margin-inline: 0.5rem;
     border-radius: 1ch;
 

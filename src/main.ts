@@ -21,6 +21,8 @@ type Task = {
 type TaskPriority = "low" | "medium" | "high";
 
 let nextId = 1;
+let pending = 0;
+let completed = 0;
 
 let tasks: Task[] = [{
     id: nextId++,
@@ -44,10 +46,13 @@ let tasks: Task[] = [{
 const app = document.querySelector("#app") as HTMLDivElement;
 
 const taskInput = document.querySelector("#task-input") as HTMLInputElement;
+taskInput.classList.add("task-input");
 
 const taskButton = document.querySelector("#task-button") as HTMLButtonElement;
+taskButton.classList.add("task-btn");
 
 const priorityInput = document.querySelector("#priority-input") as HTMLSelectElement;
+priorityInput.classList.add("priority-input");
 
 taskButton.addEventListener("click", () => {
     const taskName = taskInput.value.trim();
@@ -94,11 +99,11 @@ function renderTasks(): void {
     if (app) {
         app.innerHTML = "";
     }
-           
-    const total = document.createElement("h2");
-    total.textContent = `Total tasks: ${tasks.length}`
-   
-    app?.append(total);
+
+    const totalTasks = document.createElement("h2");
+    totalTasks.textContent = `Total tasks: ${tasks.length}`
+
+    app?.append(totalTasks);
 
     for (const task of tasks) {
         const card = document.createElement("div");
@@ -139,7 +144,7 @@ function renderTasks(): void {
             status,
             priority,
             completeButton,
-            deleteButton
+            deleteButton,
         );
 
         app.prepend(card);
