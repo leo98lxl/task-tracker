@@ -1,3 +1,20 @@
+body {
+    background-color: hsl(33, 100%, 88%);
+}
+
+label {
+    padding-inline-start: 1rem;
+}
+
+.task-card {
+    background-color: hsl(0, 0%, 100%);
+    border: 2px solid hsl(0, 0%, 66%);
+    border-radius: 1ch;
+    padding: 1rem;
+    width: fit-content;
+    margin: 1rem;
+}
+
 .completed-task {
     opacity: 0.5;
     text-decoration: line-through;
@@ -10,7 +27,7 @@
 }
 
 .task-title {
-    padding-block: 1rem;
+    padding-block-end: 1rem;
     border-block-end: 3px solid hsl(39, 100%, 50%);
     width: fit-content;
     text-transform: uppercase;
@@ -29,6 +46,7 @@
     border-radius: 1ch;
 
     &:hover, :focus-visible {
+        background-color: hsl(32, 100%, 75%);
         color: hsl(0, 0%, 100%);
         cursor: pointer;
     }

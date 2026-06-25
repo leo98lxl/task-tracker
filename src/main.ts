@@ -21,8 +21,6 @@ type Task = {
 type TaskPriority = "low" | "medium" | "high";
 
 let nextId = 1;
-let pending = 0;
-let completed = 0;
 
 let tasks: Task[] = [{
     id: nextId++,
@@ -44,6 +42,7 @@ let tasks: Task[] = [{
 }];
 
 const app = document.querySelector("#app") as HTMLDivElement;
+app.classList.add("app");
 
 const taskInput = document.querySelector("#task-input") as HTMLInputElement;
 taskInput.classList.add("task-input");

@@ -5,8 +5,6 @@ function showHeader() {
 }
 showHeader();
 let nextId = 1;
-let pending = 0;
-let completed = 0;
 let tasks = [{
         id: nextId++,
         name: "Lära mig TypeScript",
@@ -26,6 +24,7 @@ let tasks = [{
         description: "Städa förrådet",
     }];
 const app = document.querySelector("#app");
+app.classList.add("app");
 const taskInput = document.querySelector("#task-input");
 taskInput.classList.add("task-input");
 const taskButton = document.querySelector("#task-button");
