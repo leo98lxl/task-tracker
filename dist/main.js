@@ -41,6 +41,9 @@ taskButton.addEventListener("click", () => {
     const priority = priorityInput.value;
     newTask(taskName, priority);
 });
+const showTaskStatus = (status) => {
+    return tasks.filter((tasks) => tasks.status === status);
+};
 function newTask(name, priority) {
     const newTask = {
         id: nextId,
@@ -65,13 +68,27 @@ function removeTask(id) {
     tasks = tasks.filter((task) => task.id !== id);
     renderTasks();
 }
+const dashboard = document.createElement("div");
+function renderDashboard() {
+    if (app) {
+        app.innerHTML = "";
+    }
+    const totalPendingTasks = showTaskStatus("pending");
+    const totalCompletedTasks = showTaskStatus("completed");
+    const totalTasks = tasks.length;
+    dashboard.innerHTML =
+        `<div class="dashboard">
+    <h2>Dashboard</h2>
+    <p>Pending tasks: ${totalPendingTasks.length}</p>
+    <p>Completed tasks: ${totalCompletedTasks.length}</p>
+    <h3>Total tasks: ${tasks.length}</h3>
+    </div>`;
+    app?.before(dashboard);
+}
 function renderTasks() {
     if (app) {
         app.innerHTML = "";
     }
-    const totalTasks = document.createElement("h2");
-    totalTasks.textContent = `Total tasks: ${tasks.length}`;
-    app?.append(totalTasks);
     for (const task of tasks) {
         const card = document.createElement("div");
         card.classList.add("task-card");
@@ -93,12 +110,16 @@ function renderTasks() {
         completeButton.classList.add("task-btn");
         completeButton.addEventListener("click", () => {
             toggleTask(task.id);
+            renderDashboard();
+            renderTasks();
         });
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         deleteButton.classList.add("task-btn");
         deleteButton.addEventListener("click", () => {
             removeTask(task.id);
+            renderDashboard();
+            renderTasks();
         });
         card.append(name, status, priority, completeButton, deleteButton);
         app.prepend(card);
@@ -107,5 +128,7 @@ function renderTasks() {
 newTask("Träna", "high");
 newTask("Hoppa hopprep", "medium");
 newTask("Hämta posten", "low");
+renderDashboard();
+renderTasks();
 export {};
 //# sourceMappingURL=main.js.map
