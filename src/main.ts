@@ -58,8 +58,6 @@ formButton.classList.add("task-btn");
 
 const errorMessage = document.querySelector("#error-message") as HTMLParagraphElement;
 
-const taskDescription = document.querySelector("#task-description") as HTMLTextAreaElement;
-
 function submitSettings(event: SubmitEvent) {
     event.preventDefault();
     console.log("Form was successfully submitted!");

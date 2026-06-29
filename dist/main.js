@@ -34,7 +34,6 @@ priorityInput.classList.add("priority-input");
 const formButton = document.querySelector("#form-button");
 formButton.classList.add("task-btn");
 const errorMessage = document.querySelector("#error-message");
-const taskDescription = document.querySelector("#task-description");
 function submitSettings(event) {
     event.preventDefault();
     console.log("Form was successfully submitted!");
