@@ -29,8 +29,8 @@ const form = document.querySelector("#task-form");
 const errorMessage = document.querySelector("#error-message");
 const taskInput = document.querySelector("#task-input");
 taskInput.classList.add("task-input");
-const taskButton = document.querySelector("#task-button");
-taskButton.classList.add("task-btn");
+// const taskButton = document.querySelector("#task-button") as HTMLButtonElement;
+// taskButton.classList.add("task-btn");
 const priorityInput = document.querySelector("#priority-input");
 priorityInput.classList.add("priority-input");
 form.addEventListener("submit", handleSubmit);
@@ -52,15 +52,15 @@ function clearForm() {
     taskInput.value = "";
     priorityInput.value = "medium";
 }
-taskButton.addEventListener("click", () => {
-    const taskName = taskInput.value.trim();
-    if (taskName === "") {
-        console.log("Task name is required.");
-        return;
-    }
-    const priority = priorityInput.value;
-    newTask(taskName, priority);
-});
+// taskButton.addEventListener("click", () => {
+//     const taskName = taskInput.value.trim();
+//     if (taskName === "") {
+//         console.log("Task name is required.");
+//         return;
+//     }
+//     const priority = priorityInput.value as TaskPriority;
+//     newTask(taskName, priority);
+// })
 function validateTaskName(name) {
     if (name === "") {
         return "Task name is required.";

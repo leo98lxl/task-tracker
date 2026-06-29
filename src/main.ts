@@ -52,8 +52,8 @@ const errorMessage = document.querySelector("#error-message") as HTMLParagraphEl
 const taskInput = document.querySelector("#task-input") as HTMLInputElement;
 taskInput.classList.add("task-input");
 
-const taskButton = document.querySelector("#task-button") as HTMLButtonElement;
-taskButton.classList.add("task-btn");
+// const taskButton = document.querySelector("#task-button") as HTMLButtonElement;
+// taskButton.classList.add("task-btn");
 
 const priorityInput = document.querySelector("#priority-input") as HTMLSelectElement;
 priorityInput.classList.add("priority-input");
@@ -83,16 +83,16 @@ function clearForm(): void {
     priorityInput.value = "medium";
 }
 
-taskButton.addEventListener("click", () => {
-    const taskName = taskInput.value.trim();
-    if (taskName === "") {
-        console.log("Task name is required.");
-        return;
-    }
+// taskButton.addEventListener("click", () => {
+//     const taskName = taskInput.value.trim();
+//     if (taskName === "") {
+//         console.log("Task name is required.");
+//         return;
+//     }
     
-    const priority = priorityInput.value as TaskPriority;
-    newTask(taskName, priority);
-})
+//     const priority = priorityInput.value as TaskPriority;
+//     newTask(taskName, priority);
+// })
 
 function validateTaskName(name: string): string {
     if (name === "") {
