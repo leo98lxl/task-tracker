@@ -20,7 +20,6 @@ type Task = {
 
 type TaskPriority = "low" | "medium" | "high";
 type Status = "pending" | "completed";
-
 let nextId = 1;
 
 let tasks: Task[] = [{
@@ -46,78 +45,40 @@ const app = document.querySelector("#app") as HTMLDivElement;
 app.classList.add("app");
 
 const form = document.querySelector("#task-form") as HTMLFormElement;
-
-const errorMessage = document.querySelector("#error-message") as HTMLParagraphElement;
+form.addEventListener("submit", submitSettings);
 
 const taskInput = document.querySelector("#task-input") as HTMLInputElement;
 taskInput.classList.add("task-input");
 
-// const taskButton = document.querySelector("#task-button") as HTMLButtonElement;
-// taskButton.classList.add("task-btn");
-
 const priorityInput = document.querySelector("#priority-input") as HTMLSelectElement;
 priorityInput.classList.add("priority-input");
 
-form.addEventListener("submit", handleSubmit);
+const formButton = document.querySelector("#form-button") as HTMLButtonElement;
+formButton.classList.add("task-btn");
 
-function handleSubmit(event: SubmitEvent): void {
+const errorMessage = document.querySelector("#error-message") as HTMLParagraphElement;
+
+const taskDescription = document.querySelector("#task-description") as HTMLTextAreaElement;
+
+function submitSettings(event: SubmitEvent) {
     event.preventDefault();
-    console.log("Form submitted!");
+    console.log("Form was successfully submitted!");
 
     const taskName = taskInput.value.trim();
     const priority = priorityInput.value as TaskPriority;
-
-    const error = validateTaskName(taskName);
+    const error = validateTaskInput(taskName);
     if (error !== "") {
         errorMessage.textContent = error;
         return;
     }
-
     errorMessage.textContent = "";
     newTask(taskName, priority);
     renderTasks();
 }
 
-function clearForm(): void {
+function resetForm(): void {
     taskInput.value = "";
     priorityInput.value = "medium";
-}
-
-// taskButton.addEventListener("click", () => {
-//     const taskName = taskInput.value.trim();
-//     if (taskName === "") {
-//         console.log("Task name is required.");
-//         return;
-//     }
-    
-//     const priority = priorityInput.value as TaskPriority;
-//     newTask(taskName, priority);
-// })
-
-function validateTaskName(name: string): string {
-    if (name === "") {
-        return "Task name is required.";
-    }
-
-    if (name.length < 3) {
-        return "Task name must be longer than 3 characters.";
-    }
-
-    if (name.length > 40) {
-        return "Task name cannot be longer than 40 characters.";
-    }
-
-    if (taskExists(name)) {
-        return "Task name already exists.";
-    }
-    return "";
-}
-
-function taskExists(name: string): boolean | undefined {
-    for (const task of tasks) {
-        if (task.name.toLowerCase() === name.toLowerCase())
-            return true;
-    }
 }
 
 const showTaskStatus = (status: Status): Task[] => {
@@ -134,8 +95,35 @@ function newTask(name: string, priority: TaskPriority): void {
 
     tasks.push(newTask);
     nextId++;
+    resetForm();
+}
 
-    clearForm();
+function validateTaskInput(name: string): string {
+        if (name === "") {
+            return "Task name is required.";
+        }
+
+        if (name.length < 3) {
+            return "Task name must be longer than 3 characters.";
+        }
+
+        if (name.length > 40) {
+            return "Task name cannot extend 40 characters.";
+        }
+
+        if (existingTask(name)) {
+            return "Task name already exists."
+        }
+    return "";
+}
+
+function existingTask(name: string): boolean {
+    for (const task of tasks) {
+        if (task.name.toLowerCase() === name.toLowerCase()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function toggleTask(id: number): void {
@@ -162,7 +150,6 @@ function renderDashboard(): void {
 
     const totalPendingTasks = showTaskStatus("pending");
     const totalCompletedTasks = showTaskStatus("completed");
-    const totalTasks = tasks.length;
 
     dashboard.innerHTML = 
     `<div class="dashboard">
@@ -173,6 +160,7 @@ function renderDashboard(): void {
     </div>`;
 
     app?.before(dashboard);
+    console.log(totalCompletedTasks, totalPendingTasks);
 }
 
 function renderTasks(): void {

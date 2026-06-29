@@ -26,20 +26,21 @@ let tasks = [{
 const app = document.querySelector("#app");
 app.classList.add("app");
 const form = document.querySelector("#task-form");
-const errorMessage = document.querySelector("#error-message");
+form.addEventListener("submit", submitSettings);
 const taskInput = document.querySelector("#task-input");
 taskInput.classList.add("task-input");
-// const taskButton = document.querySelector("#task-button") as HTMLButtonElement;
-// taskButton.classList.add("task-btn");
 const priorityInput = document.querySelector("#priority-input");
 priorityInput.classList.add("priority-input");
-form.addEventListener("submit", handleSubmit);
-function handleSubmit(event) {
+const formButton = document.querySelector("#form-button");
+formButton.classList.add("task-btn");
+const errorMessage = document.querySelector("#error-message");
+const taskDescription = document.querySelector("#task-description");
+function submitSettings(event) {
     event.preventDefault();
-    console.log("Form submitted!");
+    console.log("Form was successfully submitted!");
     const taskName = taskInput.value.trim();
     const priority = priorityInput.value;
-    const error = validateTaskName(taskName);
+    const error = validateTaskInput(taskName);
     if (error !== "") {
         errorMessage.textContent = error;
         return;
@@ -48,39 +49,9 @@ function handleSubmit(event) {
     newTask(taskName, priority);
     renderTasks();
 }
-function clearForm() {
+function resetForm() {
     taskInput.value = "";
     priorityInput.value = "medium";
-}
-// taskButton.addEventListener("click", () => {
-//     const taskName = taskInput.value.trim();
-//     if (taskName === "") {
-//         console.log("Task name is required.");
-//         return;
-//     }
-//     const priority = priorityInput.value as TaskPriority;
-//     newTask(taskName, priority);
-// })
-function validateTaskName(name) {
-    if (name === "") {
-        return "Task name is required.";
-    }
-    if (name.length < 3) {
-        return "Task name must be longer than 3 characters.";
-    }
-    if (name.length > 40) {
-        return "Task name cannot be longer than 40 characters.";
-    }
-    if (taskExists(name)) {
-        return "Task name already exists.";
-    }
-    return "";
-}
-function taskExists(name) {
-    for (const task of tasks) {
-        if (task.name.toLowerCase() === name.toLowerCase())
-            return true;
-    }
 }
 const showTaskStatus = (status) => {
     return tasks.filter((tasks) => tasks.status === status);
@@ -94,7 +65,30 @@ function newTask(name, priority) {
     };
     tasks.push(newTask);
     nextId++;
-    clearForm();
+    resetForm();
+}
+function validateTaskInput(name) {
+    if (name === "") {
+        return "Task name is required.";
+    }
+    if (name.length < 3) {
+        return "Task name must be longer than 3 characters.";
+    }
+    if (name.length > 40) {
+        return "Task name cannot extend 40 characters.";
+    }
+    if (existingTask(name)) {
+        return "Task name already exists.";
+    }
+    return "";
+}
+function existingTask(name) {
+    for (const task of tasks) {
+        if (task.name.toLowerCase() === name.toLowerCase()) {
+            return true;
+        }
+    }
+    return false;
 }
 function toggleTask(id) {
     for (const task of tasks) {
@@ -115,7 +109,6 @@ function renderDashboard() {
     }
     const totalPendingTasks = showTaskStatus("pending");
     const totalCompletedTasks = showTaskStatus("completed");
-    const totalTasks = tasks.length;
     dashboard.innerHTML =
         `<div class="dashboard">
     <h2>Dashboard</h2>
@@ -124,6 +117,7 @@ function renderDashboard() {
     <h3>Total tasks: ${tasks.length}</h3>
     </div>`;
     app?.before(dashboard);
+    console.log(totalCompletedTasks, totalPendingTasks);
 }
 function renderTasks() {
     if (app) {
