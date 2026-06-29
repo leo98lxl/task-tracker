@@ -25,22 +25,63 @@ let tasks = [{
     }];
 const app = document.querySelector("#app");
 app.classList.add("app");
+const form = document.querySelector("#task-form");
+const errorMessage = document.querySelector("#error-message");
 const taskInput = document.querySelector("#task-input");
 taskInput.classList.add("task-input");
 const taskButton = document.querySelector("#task-button");
 taskButton.classList.add("task-btn");
 const priorityInput = document.querySelector("#priority-input");
 priorityInput.classList.add("priority-input");
+form.addEventListener("submit", handleSubmit);
+function handleSubmit(event) {
+    event.preventDefault();
+    console.log("Form submitted!");
+    const taskName = taskInput.value.trim();
+    const priority = priorityInput.value;
+    const error = validateTaskName(taskName);
+    if (error !== "") {
+        errorMessage.textContent = error;
+        return;
+    }
+    errorMessage.textContent = "";
+    newTask(taskName, priority);
+    renderTasks();
+}
+function clearForm() {
+    taskInput.value = "";
+    priorityInput.value = "medium";
+}
 taskButton.addEventListener("click", () => {
     const taskName = taskInput.value.trim();
     if (taskName === "") {
         console.log("Task name is required.");
-        alert("Please enter a task name.");
         return;
     }
     const priority = priorityInput.value;
     newTask(taskName, priority);
 });
+function validateTaskName(name) {
+    if (name === "") {
+        return "Task name is required.";
+    }
+    if (name.length < 3) {
+        return "Task name must be longer than 3 characters.";
+    }
+    if (name.length > 40) {
+        return "Task name cannot be longer than 40 characters.";
+    }
+    if (taskExists(name)) {
+        return "Task name already exists.";
+    }
+    return "";
+}
+function taskExists(name) {
+    for (const task of tasks) {
+        if (task.name.toLowerCase() === name.toLowerCase())
+            return true;
+    }
+}
 const showTaskStatus = (status) => {
     return tasks.filter((tasks) => tasks.status === status);
 };
@@ -53,8 +94,7 @@ function newTask(name, priority) {
     };
     tasks.push(newTask);
     nextId++;
-    renderTasks();
-    taskInput.value = "";
+    clearForm();
 }
 function toggleTask(id) {
     for (const task of tasks) {
@@ -130,5 +170,38 @@ newTask("Hoppa hopprep", "medium");
 newTask("Hämta posten", "low");
 renderDashboard();
 renderTasks();
+//destructuring
+const runners = [
+    "Leo",
+    "Andréa",
+    "Johan"
+];
+const [, second, third] = runners;
+const easyRuns = [
+    "Monday",
+    "Wednesday"
+];
+const workouts = [
+    "Tuesday",
+    "Thursday"
+];
+const week = [
+    ...easyRuns,
+    ...workouts,
+    "Friday"
+];
+const numbers = [1, 2, 3];
+const copy = [...numbers];
+copy.push(4);
+const runner = {
+    name: "Leo",
+    pace: "4:20"
+};
+const fasterRunner = {
+    ...runner,
+    pace: "4:10"
+};
+function printRunner({ distance, pace }) {
+}
 export {};
 //# sourceMappingURL=main.js.map
