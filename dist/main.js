@@ -65,6 +65,7 @@ function newTask(name, priority) {
     };
     tasks.push(newTask);
     nextId++;
+    renderDashboard();
     resetForm();
 }
 function validateTaskInput(name) {
@@ -117,7 +118,6 @@ function renderDashboard() {
     <h3>Total tasks: ${tasks.length}</h3>
     </div>`;
     app?.before(dashboard);
-    console.log(totalCompletedTasks, totalPendingTasks);
 }
 function renderTasks() {
     if (app) {

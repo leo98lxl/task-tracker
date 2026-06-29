@@ -66,11 +66,11 @@ function submitSettings(event: SubmitEvent) {
 
     const taskName = taskInput.value.trim();
     const priority = priorityInput.value as TaskPriority;
-    const error = validateTaskInput(taskName);
-    if (error !== "") {
-        errorMessage.textContent = error;
-        return;
-    }
+        const error = validateTaskInput(taskName);
+        if (error !== "") {
+            errorMessage.textContent = error;
+            return;
+        }
     errorMessage.textContent = "";
     newTask(taskName, priority);
     renderTasks();
@@ -95,6 +95,7 @@ function newTask(name: string, priority: TaskPriority): void {
 
     tasks.push(newTask);
     nextId++;
+    renderDashboard();
     resetForm();
 }
 
@@ -102,15 +103,12 @@ function validateTaskInput(name: string): string {
         if (name === "") {
             return "Task name is required.";
         }
-
         if (name.length < 3) {
             return "Task name must be longer than 3 characters.";
         }
-
         if (name.length > 40) {
             return "Task name cannot extend 40 characters.";
         }
-
         if (existingTask(name)) {
             return "Task name already exists."
         }
@@ -160,7 +158,6 @@ function renderDashboard(): void {
     </div>`;
 
     app?.before(dashboard);
-    console.log(totalCompletedTasks, totalPendingTasks);
 }
 
 function renderTasks(): void {
