@@ -64,6 +64,7 @@ function newTask(name, priority) {
     };
     tasks.push(newTask);
     nextId++;
+    saveTasksToLocal();
     renderDashboard();
     resetForm();
 }
@@ -96,11 +97,24 @@ function toggleTask(id) {
             task.status = task.status === "pending" ? "completed" : "pending";
         }
     }
+    saveTasksToLocal();
     renderTasks();
 }
 function removeTask(id) {
     tasks = tasks.filter((task) => task.id !== id);
+    saveTasksToLocal();
     renderTasks();
+}
+function saveTasksToLocal() {
+    const jsonSave = JSON.stringify(tasks);
+    localStorage.setItem("tasks", jsonSave);
+}
+function loadTasksFromLocal() {
+    const jsonLoad = localStorage.getItem("tasks");
+    if (jsonLoad === null) {
+        return;
+    }
+    JSON.parse("tasks");
 }
 const dashboard = document.createElement("div");
 function renderDashboard() {

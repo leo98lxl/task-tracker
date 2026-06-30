@@ -93,6 +93,7 @@ function newTask(name: string, priority: TaskPriority): void {
 
     tasks.push(newTask);
     nextId++;
+    saveTasksToLocal();
     renderDashboard();
     resetForm();
 }
@@ -128,13 +129,28 @@ function toggleTask(id: number): void {
             task.status = task.status === "pending" ? "completed" : "pending";
         }
     }
+    saveTasksToLocal();
     renderTasks();
 }
 
 function removeTask(id: number): void {
     tasks = tasks.filter((task) => task.id !== id);
 
+    saveTasksToLocal();
     renderTasks();
+}
+
+function saveTasksToLocal(): void {
+    const jsonSave = JSON.stringify(tasks);
+    localStorage.setItem("tasks", jsonSave);
+}
+
+function loadTasksFromLocal(): void {
+    const jsonLoad = localStorage.getItem("tasks");
+    if (jsonLoad === null) {
+        return;
+    }
+    JSON.parse("tasks");
 }
 
 const dashboard = document.createElement("div") as HTMLDivElement;
