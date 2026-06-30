@@ -21,7 +21,6 @@ type Task = {
 type TaskPriority = "low" | "medium" | "high";
 type Status = "pending" | "completed";
 let nextId = 1;
-
 let tasks: Task[] = [];
 
 const app = document.querySelector("#app") as HTMLDivElement;
@@ -157,6 +156,12 @@ function renderDashboard(): void {
     <p>Completed tasks: ${totalCompletedTasks.length}</p>
     <h3>Total tasks: ${tasks.length}</h3>
     </div>`;
+
+    const clearButton = document.createElement("button");
+    clearButton.textContent = "Clear All";
+    clearButton.classList.add("task-btn");
+
+    dashboard.append(clearButton);
 
     app?.before(dashboard);
 }
