@@ -1,4 +1,5 @@
 body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     background-color: hsl(33, 100%, 88%);
 }
 
@@ -7,16 +8,18 @@ label {
 }
 
 .app {
+    border-block-start: 3px solid hsl(39, 100%, 50%);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
 }
 
-.task-card {
-    background-color: hsl(0, 0%, 100%);
+.dashboard, .task-card {
+    background-color: hsl(0, 0%, 100%, 0.5);
     border: 2px solid hsl(0, 0%, 66%);
     border-radius: 1ch;
     padding: 1rem;
     margin: 1rem;
+    width: fit-content;
 }
 
 .completed-task {

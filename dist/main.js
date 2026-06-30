@@ -107,7 +107,7 @@ function loadTasksFromLocal() {
     }
     tasks = JSON.parse(jsonLoad);
 }
-let date = new Date().toLocaleString();
+let date = new Date().toLocaleString("sv-SE");
 function saveTasksDate() {
     const jsonSaveTitle = `Last saved:`;
     const jsonSaveTime = JSON.stringify(date);
@@ -122,7 +122,6 @@ function renderDashboard() {
     const totalCompletedTasks = showTaskStatus("completed");
     dashboard.innerHTML =
         `<div class="dashboard">
-    <h2>Dashboard</h2>
     <p>Pending tasks: ${totalPendingTasks.length}</p>
     <p>Completed tasks: ${totalCompletedTasks.length}</p>
     <h3>Total tasks: ${tasks.length}</h3>

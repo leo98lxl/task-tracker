@@ -143,7 +143,7 @@ function loadTasksFromLocal(): void {
     tasks = JSON.parse(jsonLoad);
 }
 
-let date = new Date().toLocaleString();
+let date = new Date().toLocaleString("sv-SE");
 
 function saveTasksDate(): void {
     const jsonSaveTitle = `Last saved:`;
@@ -163,7 +163,6 @@ function renderDashboard(): void {
 
     dashboard.innerHTML = 
     `<div class="dashboard">
-    <h2>Dashboard</h2>
     <p>Pending tasks: ${totalPendingTasks.length}</p>
     <p>Completed tasks: ${totalCompletedTasks.length}</p>
     <h3>Total tasks: ${tasks.length}</h3>
