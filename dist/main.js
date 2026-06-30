@@ -29,6 +29,7 @@ function submitSettings(event) {
     }
     errorMessage.textContent = "";
     newTask(taskName, priority);
+    saveTasksDate();
     renderDashboard();
     renderTasks();
 }
@@ -49,6 +50,7 @@ function newTask(name, priority) {
     tasks.push(newTask);
     nextId++;
     saveTasksToLocal();
+    saveTasksDate();
     renderDashboard();
     renderTasks();
     resetForm();
@@ -83,12 +85,14 @@ function toggleTask(id) {
         }
     }
     saveTasksToLocal();
+    saveTasksDate();
     renderDashboard();
     renderTasks();
 }
 function removeTask(id) {
     tasks = tasks.filter((task) => task.id !== id);
     saveTasksToLocal();
+    saveTasksDate();
     renderDashboard();
     renderTasks();
 }
@@ -103,6 +107,12 @@ function loadTasksFromLocal() {
     }
     tasks = JSON.parse(jsonLoad);
 }
+let date = new Date().toLocaleString();
+function saveTasksDate() {
+    const jsonSaveTitle = `Last saved:`;
+    const jsonSaveTime = JSON.stringify(date);
+    localStorage.setItem(jsonSaveTitle, jsonSaveTime);
+}
 const dashboard = document.createElement("div");
 function renderDashboard() {
     if (app) {
@@ -116,6 +126,7 @@ function renderDashboard() {
     <p>Pending tasks: ${totalPendingTasks.length}</p>
     <p>Completed tasks: ${totalCompletedTasks.length}</p>
     <h3>Total tasks: ${tasks.length}</h3>
+    <p>Last saved: ${date}</p>
     </div>`;
     const emptyMessage = document.createElement("p");
     if (tasks.length === 0) {
@@ -125,8 +136,8 @@ function renderDashboard() {
         emptyMessage.textContent = "";
     }
     const clearButton = document.createElement("button");
-    clearButton.textContent = "Clear All";
     clearButton.classList.add("task-btn");
+    clearButton.textContent = "Clear All";
     clearButton.addEventListener("click", () => {
         localStorage.removeItem("tasks");
         renderDashboard();

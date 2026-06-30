@@ -53,6 +53,7 @@ function submitSettings(event: SubmitEvent) {
         }
     errorMessage.textContent = "";
     newTask(taskName, priority);
+    saveTasksDate();
     renderDashboard();
     renderTasks();
 }
@@ -77,6 +78,7 @@ function newTask(name: string, priority: TaskPriority): void {
     tasks.push(newTask);
     nextId++;
     saveTasksToLocal();
+    saveTasksDate();
     renderDashboard();
     renderTasks();
     resetForm();
@@ -114,6 +116,7 @@ function toggleTask(id: number): void {
         }
     }
     saveTasksToLocal();
+    saveTasksDate();
     renderDashboard();
     renderTasks();
 }
@@ -122,6 +125,7 @@ function removeTask(id: number): void {
     tasks = tasks.filter((task) => task.id !== id);
 
     saveTasksToLocal();
+    saveTasksDate();
     renderDashboard();
     renderTasks();
 }
@@ -137,6 +141,14 @@ function loadTasksFromLocal(): void {
         return;
     }
     tasks = JSON.parse(jsonLoad);
+}
+
+let date = new Date().toLocaleString();
+
+function saveTasksDate(): void {
+    const jsonSaveTitle = `Last saved:`;
+    const jsonSaveTime = JSON.stringify(date);
+    localStorage.setItem(jsonSaveTitle, jsonSaveTime);
 }
 
 const dashboard = document.createElement("div") as HTMLDivElement;
@@ -155,18 +167,19 @@ function renderDashboard(): void {
     <p>Pending tasks: ${totalPendingTasks.length}</p>
     <p>Completed tasks: ${totalCompletedTasks.length}</p>
     <h3>Total tasks: ${tasks.length}</h3>
+    <p>Last saved: ${date}</p>
     </div>`;
 
     const emptyMessage = document.createElement("p");
         if (tasks.length === 0) {
-            emptyMessage.textContent = "No tasks added yet."
+            emptyMessage.textContent = "No tasks added yet.";
         } else {
             emptyMessage.textContent = "";
         }
 
     const clearButton = document.createElement("button");
-    clearButton.textContent = "Clear All";
     clearButton.classList.add("task-btn");
+    clearButton.textContent = "Clear All";
 
     clearButton.addEventListener("click", () => {
         localStorage.removeItem("tasks");
