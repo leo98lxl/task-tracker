@@ -117,6 +117,13 @@ function renderDashboard() {
     <p>Completed tasks: ${totalCompletedTasks.length}</p>
     <h3>Total tasks: ${tasks.length}</h3>
     </div>`;
+    const emptyMessage = document.createElement("p");
+    if (tasks.length === 0) {
+        emptyMessage.textContent = "No tasks added yet.";
+    }
+    else {
+        emptyMessage.textContent = "";
+    }
     const clearButton = document.createElement("button");
     clearButton.textContent = "Clear All";
     clearButton.classList.add("task-btn");
@@ -125,7 +132,7 @@ function renderDashboard() {
         renderDashboard();
         renderTasks();
     });
-    dashboard.append(clearButton);
+    dashboard.append(clearButton, emptyMessage);
     app?.before(dashboard);
 }
 function renderTasks() {

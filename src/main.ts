@@ -46,7 +46,7 @@ function submitSettings(event: SubmitEvent) {
 
     const taskName = taskInput.value.trim();
     const priority = priorityInput.value as TaskPriority;
-        const error = validateTaskInput(taskName);
+    const error = validateTaskInput(taskName);
         if (error !== "") {
             errorMessage.textContent = error;
             return;
@@ -157,6 +157,13 @@ function renderDashboard(): void {
     <h3>Total tasks: ${tasks.length}</h3>
     </div>`;
 
+    const emptyMessage = document.createElement("p");
+        if (tasks.length === 0) {
+            emptyMessage.textContent = "No tasks added yet."
+        } else {
+            emptyMessage.textContent = "";
+        }
+
     const clearButton = document.createElement("button");
     clearButton.textContent = "Clear All";
     clearButton.classList.add("task-btn");
@@ -167,7 +174,7 @@ function renderDashboard(): void {
         renderTasks();
     })
 
-    dashboard.append(clearButton);
+    dashboard.append(clearButton, emptyMessage);
     app?.before(dashboard);
 }
 
