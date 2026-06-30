@@ -120,6 +120,11 @@ function renderDashboard() {
     const clearButton = document.createElement("button");
     clearButton.textContent = "Clear All";
     clearButton.classList.add("task-btn");
+    clearButton.addEventListener("click", () => {
+        localStorage.removeItem("tasks");
+        renderDashboard();
+        renderTasks();
+    });
     dashboard.append(clearButton);
     app?.before(dashboard);
 }

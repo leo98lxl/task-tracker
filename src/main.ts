@@ -161,8 +161,13 @@ function renderDashboard(): void {
     clearButton.textContent = "Clear All";
     clearButton.classList.add("task-btn");
 
-    dashboard.append(clearButton);
+    clearButton.addEventListener("click", () => {
+        localStorage.removeItem("tasks");
+        renderDashboard();
+        renderTasks();
+    })
 
+    dashboard.append(clearButton);
     app?.before(dashboard);
 }
 
@@ -216,7 +221,6 @@ function renderTasks(): void {
             completeButton,
             deleteButton,
         );
-
         app.prepend(card);
     }
 }
