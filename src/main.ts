@@ -22,24 +22,7 @@ type TaskPriority = "low" | "medium" | "high";
 type Status = "pending" | "completed";
 let nextId = 1;
 
-let tasks: Task[] = [{
-    id: nextId++,
-    name: "Lära mig TypeScript",
-    status: "pending",
-    priority: "high",
-}, {
-    id: nextId++,
-    name: "Springa 5 km",
-    status: "completed",
-    priority: "medium",
-    notes: "Tog 10 min",
-}, {
-    id: nextId++,
-    name: "Städa",
-    status: "pending",
-    priority: "high",
-    description: "Städa förrådet",
-}];
+let tasks: Task[] = [];
 
 const app = document.querySelector("#app") as HTMLDivElement;
 app.classList.add("app");
@@ -71,6 +54,7 @@ function submitSettings(event: SubmitEvent) {
         }
     errorMessage.textContent = "";
     newTask(taskName, priority);
+    renderDashboard();
     renderTasks();
 }
 
@@ -95,6 +79,7 @@ function newTask(name: string, priority: TaskPriority): void {
     nextId++;
     saveTasksToLocal();
     renderDashboard();
+    renderTasks();
     resetForm();
 }
 
@@ -130,6 +115,7 @@ function toggleTask(id: number): void {
         }
     }
     saveTasksToLocal();
+    renderDashboard();
     renderTasks();
 }
 
@@ -137,6 +123,7 @@ function removeTask(id: number): void {
     tasks = tasks.filter((task) => task.id !== id);
 
     saveTasksToLocal();
+    renderDashboard();
     renderTasks();
 }
 
@@ -150,7 +137,7 @@ function loadTasksFromLocal(): void {
     if (jsonLoad === null) {
         return;
     }
-    JSON.parse("tasks");
+    tasks = JSON.parse(jsonLoad);
 }
 
 const dashboard = document.createElement("div") as HTMLDivElement;
@@ -229,10 +216,7 @@ function renderTasks(): void {
     }
 }
 
-newTask("Träna", "high");
-newTask("Hoppa hopprep", "medium");
-newTask("Hämta posten", "low");
-
+loadTasksFromLocal();
 renderDashboard();
 renderTasks();
 

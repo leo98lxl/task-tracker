@@ -5,24 +5,7 @@ function showHeader() {
 }
 showHeader();
 let nextId = 1;
-let tasks = [{
-        id: nextId++,
-        name: "Lära mig TypeScript",
-        status: "pending",
-        priority: "high",
-    }, {
-        id: nextId++,
-        name: "Springa 5 km",
-        status: "completed",
-        priority: "medium",
-        notes: "Tog 10 min",
-    }, {
-        id: nextId++,
-        name: "Städa",
-        status: "pending",
-        priority: "high",
-        description: "Städa förrådet",
-    }];
+let tasks = [];
 const app = document.querySelector("#app");
 app.classList.add("app");
 const form = document.querySelector("#task-form");
@@ -46,6 +29,7 @@ function submitSettings(event) {
     }
     errorMessage.textContent = "";
     newTask(taskName, priority);
+    renderDashboard();
     renderTasks();
 }
 function resetForm() {
@@ -66,6 +50,7 @@ function newTask(name, priority) {
     nextId++;
     saveTasksToLocal();
     renderDashboard();
+    renderTasks();
     resetForm();
 }
 function validateTaskInput(name) {
@@ -98,11 +83,13 @@ function toggleTask(id) {
         }
     }
     saveTasksToLocal();
+    renderDashboard();
     renderTasks();
 }
 function removeTask(id) {
     tasks = tasks.filter((task) => task.id !== id);
     saveTasksToLocal();
+    renderDashboard();
     renderTasks();
 }
 function saveTasksToLocal() {
@@ -114,7 +101,7 @@ function loadTasksFromLocal() {
     if (jsonLoad === null) {
         return;
     }
-    JSON.parse("tasks");
+    tasks = JSON.parse(jsonLoad);
 }
 const dashboard = document.createElement("div");
 function renderDashboard() {
@@ -172,9 +159,7 @@ function renderTasks() {
         app.prepend(card);
     }
 }
-newTask("Träna", "high");
-newTask("Hoppa hopprep", "medium");
-newTask("Hämta posten", "low");
+loadTasksFromLocal();
 renderDashboard();
 renderTasks();
 //destructuring
