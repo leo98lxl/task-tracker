@@ -1,22 +1,23 @@
+import { renderDashboard, renderTasks } from "./render.js";
+import { selectId, selectTask } from "./tasks.js";
 function showHeader() {
     console.log(`===============================`);
     console.log(`Task Tracker`);
     console.log(`===============================`);
 }
 showHeader();
-let nextId = 1;
-let tasks = [];
-const app = document.querySelector("#app");
+export const app = document.querySelector("#app");
 app.classList.add("app");
-const form = document.querySelector("#task-form");
+export const form = document.querySelector("#task-form");
 form.addEventListener("submit", submitSettings);
-const taskInput = document.querySelector("#task-input");
+export const taskInput = document.querySelector("#task-input");
 taskInput.classList.add("task-input");
-const priorityInput = document.querySelector("#priority-input");
+export const priorityInput = document.querySelector("#priority-input");
 priorityInput.classList.add("priority-input");
-const formButton = document.querySelector("#form-button");
+export const formButton = document.querySelector("#form-button");
 formButton.classList.add("task-btn");
-const errorMessage = document.querySelector("#error-message");
+export const errorMessage = document.querySelector("#error-message");
+export const dashboard = document.createElement("div");
 function submitSettings(event) {
     event.preventDefault();
     console.log("Form was successfully submitted!");
@@ -113,78 +114,6 @@ function saveTasksDate() {
     const jsonSaveTime = JSON.stringify(date);
     localStorage.setItem(jsonSaveTitle, jsonSaveTime);
 }
-const dashboard = document.createElement("div");
-function renderDashboard() {
-    if (app) {
-        app.innerHTML = "";
-    }
-    const totalPendingTasks = showTaskStatus("pending");
-    const totalCompletedTasks = showTaskStatus("completed");
-    dashboard.innerHTML =
-        `<div class="dashboard">
-    <p>Pending tasks: ${totalPendingTasks.length}</p>
-    <p>Completed tasks: ${totalCompletedTasks.length}</p>
-    <h3>Total tasks: ${tasks.length}</h3>
-    <p>Last saved: ${date}</p>
-    </div>`;
-    const emptyMessage = document.createElement("p");
-    if (tasks.length === 0) {
-        emptyMessage.textContent = "No tasks added yet.";
-    }
-    else {
-        emptyMessage.textContent = "";
-    }
-    const clearButton = document.createElement("button");
-    clearButton.classList.add("task-btn");
-    clearButton.textContent = "Clear All";
-    clearButton.addEventListener("click", () => {
-        localStorage.removeItem("tasks");
-        renderDashboard();
-        renderTasks();
-    });
-    dashboard.append(clearButton, emptyMessage);
-    app?.before(dashboard);
-}
-function renderTasks() {
-    if (app) {
-        app.innerHTML = "";
-    }
-    for (const task of tasks) {
-        const card = document.createElement("div");
-        card.classList.add("task-card");
-        if (task.status === "completed") {
-            card.classList.add("completed-task");
-        }
-        const name = document.createElement("h3");
-        name.textContent = task.name;
-        name.classList.add("task-title");
-        const status = document.createElement("p");
-        status.textContent = `Status: ${task.status}`;
-        const priority = document.createElement("p");
-        priority.textContent = `Priority: ${task.priority}`;
-        if (task.priority === "high") {
-            priority.classList.add("task-priority-high");
-        }
-        const completeButton = document.createElement("button");
-        completeButton.textContent = task.status === "pending" ? "Complete" : "Undo";
-        completeButton.classList.add("task-btn");
-        completeButton.addEventListener("click", () => {
-            toggleTask(task.id);
-            renderDashboard();
-            renderTasks();
-        });
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.classList.add("task-btn");
-        deleteButton.addEventListener("click", () => {
-            removeTask(task.id);
-            renderDashboard();
-            renderTasks();
-        });
-        card.append(name, status, priority, completeButton, deleteButton);
-        app.prepend(card);
-    }
-}
 loadTasksFromLocal();
 renderDashboard();
 renderTasks();
@@ -221,5 +150,4 @@ const fasterRunner = {
 };
 function printRunner({ distance, pace }) {
 }
-export {};
 //# sourceMappingURL=main.js.map
