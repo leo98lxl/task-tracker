@@ -3,9 +3,6 @@ import { renderDashboard, renderTasks } from "./render.js";
 import { saveTasksDate, saveTasksToLocal } from "./storage.js";
 let nextId = 1;
 let tasks = [];
-export function selectId() {
-    return nextId;
-}
 export function getTaskArray() {
     return tasks;
 }

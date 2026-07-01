@@ -1,14 +1,32 @@
+*:focus-visible {
+    outline: 5px solid hsl(0, 0%, 0%);
+}
+
+/* background created by Temani Afif, gathered from https://css-pattern.com/ */
+html {
+  --s: 85px; /* control the size*/
+  --c1: hsl(39, 83%, 45%);
+  --c2: hsl(0, 13%, 90%);
+  --c3: hsl(30, 59%, 79%);
+  
+  --_g: conic-gradient(at 50% 25%,hsla(0, 0%, 0%, 0) 75%,var(--c1) 0);
+  background:
+    var(--_g),var(--_g) var(--s) var(--s),
+    var(--_g) calc(2*var(--s)) calc(2*var(--s)),
+    var(--_g) calc(3*var(--s)) calc(3*var(--s)),
+    repeating-linear-gradient(135deg,var(--c2) 0 12.5%,var(--c3) 0 25%);
+  background-size: calc(4*var(--s)) calc(4*var(--s))
+}
+
 body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-color: hsl(33, 100%, 88%);
 }
 
 label {
-    padding-inline-start: 1rem;
+    padding-inline: 0.5rem;
 }
 
 .app {
-    border-block-start: 3px solid hsl(39, 100%, 50%);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
 }
@@ -19,7 +37,7 @@ label {
 }
 
 .dashboard, .task-card {
-    background-color: hsl(0, 0%, 100%, 0.5);
+    background-color: hsl(0, 0%, 100%);
     border: 2px solid hsl(0, 0%, 66%);
     border-radius: 1ch;
     padding: 1rem;

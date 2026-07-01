@@ -1,5 +1,4 @@
 import type { Status, Task, TaskPriority } from "./types.js";
-export declare function selectId(): number;
 export declare function getTaskArray(): Task[];
 export declare function setTaskArray(newTasks: Task[]): void;
 export declare const showTaskStatus: (status: Status) => Task[];

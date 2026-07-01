@@ -7,10 +7,6 @@ let nextId = 1;
 
 let tasks: Task[] = [];
 
-export function selectId() {
-    return nextId;
-}
-
 export function getTaskArray() {
     return tasks;
 }
