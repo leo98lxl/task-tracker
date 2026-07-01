@@ -1,3 +1,5 @@
+import type { Status, Task, TaskPriority } from "./types.js";
+
 function showHeader():void {
     console.log(`===============================`);
     console.log(`Task Tracker`);
@@ -6,20 +8,6 @@ function showHeader():void {
 
 showHeader();
 
-type Task = {
-    id: number;
-    name: string;
-    status: "pending" | "completed";
-    priority: "low" | "medium" | "high";
-    description?: string;
-    notes?: string;
-    dueDate?: number | string;
-    category?: "school" | "spare time";
-    tags?: string;
-}
-
-type TaskPriority = "low" | "medium" | "high";
-type Status = "pending" | "completed";
 let nextId = 1;
 let tasks: Task[] = [];
 
