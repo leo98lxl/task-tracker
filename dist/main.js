@@ -1,5 +1,6 @@
 import { renderDashboard, renderTasks } from "./render.js";
 import { selectId, selectTask } from "./tasks.js";
+import { loadTasksFromLocal, saveTasksToLocal } from "./storage.js";
 function showHeader() {
     console.log(`===============================`);
     console.log(`Task Tracker`);
@@ -96,17 +97,6 @@ function removeTask(id) {
     saveTasksDate();
     renderDashboard();
     renderTasks();
-}
-function saveTasksToLocal() {
-    const jsonSave = JSON.stringify(tasks);
-    localStorage.setItem("tasks", jsonSave);
-}
-function loadTasksFromLocal() {
-    const jsonLoad = localStorage.getItem("tasks");
-    if (jsonLoad === null) {
-        return;
-    }
-    tasks = JSON.parse(jsonLoad);
 }
 let date = new Date().toLocaleString("sv-SE");
 function saveTasksDate() {

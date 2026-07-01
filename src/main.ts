@@ -1,6 +1,7 @@
 import type { Status, Task, TaskPriority } from "./types.js";
 import { renderDashboard, renderTasks } from "./render.js";
 import { selectId, selectTask } from "./tasks.js";
+import { loadTasksFromLocal, saveTasksToLocal } from "./storage.js";
 
 function showHeader():void {
     console.log(`===============================`);
@@ -117,19 +118,6 @@ function removeTask(id: number): void {
     saveTasksDate();
     renderDashboard();
     renderTasks();
-}
-
-function saveTasksToLocal(): void {
-    const jsonSave = JSON.stringify(tasks);
-    localStorage.setItem("tasks", jsonSave);
-}
-
-function loadTasksFromLocal(): void {
-    const jsonLoad = localStorage.getItem("tasks");
-    if (jsonLoad === null) {
-        return;
-    }
-    tasks = JSON.parse(jsonLoad);
 }
 
 let date = new Date().toLocaleString("sv-SE");
