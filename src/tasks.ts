@@ -1,6 +1,7 @@
 import type { Status, Task, TaskPriority } from "./types.js";
+import { resetForm } from "./main.js";
 import { renderDashboard, renderTasks } from "./render.js";
-import { saveTasksToLocal } from "./storage.js";
+import { saveTasksDate, saveTasksToLocal } from "./storage.js";
 
 let nextId = 1;
 
@@ -10,8 +11,12 @@ export function selectId() {
     return nextId;
 }
 
-export function selectTask() {
+export function getTaskArray() {
     return tasks;
+}
+
+export function setTaskArray(newTasks: Task[]) {
+    tasks = newTasks;
 }
 
 export const showTaskStatus = (status: Status): Task[] => {

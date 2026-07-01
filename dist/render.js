@@ -1,5 +1,6 @@
 import { app, dashboard } from "./main.js";
-import { selectTask, showTaskStatus, removeTask, toggleTask } from "./tasks.js";
+import { getTaskArray, showTaskStatus, removeTask, toggleTask } from "./tasks.js";
+import { date } from "./storage.js";
 export function renderDashboard() {
     if (app) {
         app.innerHTML = "";
@@ -10,11 +11,11 @@ export function renderDashboard() {
         `<div class="dashboard">
     <p>Pending tasks: ${totalPendingTasks.length}</p>
     <p>Completed tasks: ${totalCompletedTasks.length}</p>
-    <h3>Total tasks: ${selectTask().length}</h3>
+    <h3>Total tasks: ${getTaskArray().length}</h3>
     <p>Last saved: ${date}</p>
     </div>`;
     const emptyMessage = document.createElement("p");
-    if (selectTask().length === 0) {
+    if (getTaskArray().length === 0) {
         emptyMessage.textContent = "No tasks added yet.";
     }
     else {
@@ -35,7 +36,7 @@ export function renderTasks() {
     if (app) {
         app.innerHTML = "";
     }
-    for (const task of selectTask()) {
+    for (const task of getTaskArray()) {
         const card = document.createElement("div");
         card.classList.add("task-card");
         if (task.status === "completed") {

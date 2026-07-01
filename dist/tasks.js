@@ -1,12 +1,16 @@
+import { resetForm } from "./main.js";
 import { renderDashboard, renderTasks } from "./render.js";
-import { saveTasksToLocal } from "./storage.js";
+import { saveTasksDate, saveTasksToLocal } from "./storage.js";
 let nextId = 1;
 let tasks = [];
 export function selectId() {
     return nextId;
 }
-export function selectTask() {
+export function getTaskArray() {
     return tasks;
+}
+export function setTaskArray(newTasks) {
+    tasks = newTasks;
 }
 export const showTaskStatus = (status) => {
     return tasks.filter((tasks) => tasks.status === status);

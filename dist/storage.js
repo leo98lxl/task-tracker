@@ -1,6 +1,6 @@
-import { selectTask } from "./tasks.js";
+import { getTaskArray, setTaskArray } from "./tasks.js";
 export function saveTasksToLocal() {
-    const jsonSave = JSON.stringify(selectTask());
+    const jsonSave = JSON.stringify(getTaskArray());
     localStorage.setItem("tasks", jsonSave);
 }
 export function loadTasksFromLocal() {
@@ -8,6 +8,12 @@ export function loadTasksFromLocal() {
     if (jsonLoad === null) {
         return;
     }
-    tasks = JSON.parse(jsonLoad);
+    setTaskArray(JSON.parse(jsonLoad));
+}
+export let date = new Date().toLocaleString("sv-SE");
+export function saveTasksDate() {
+    const jsonSaveTitle = `Last saved:`;
+    const jsonSaveTime = JSON.stringify(date);
+    localStorage.setItem(jsonSaveTitle, jsonSaveTime);
 }
 //# sourceMappingURL=storage.js.map
