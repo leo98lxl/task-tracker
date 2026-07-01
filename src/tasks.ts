@@ -1,5 +1,5 @@
 import type { Status, Task, TaskPriority } from "./types.js";
-import { resetForm } from "./main.js";
+import { priorityInput, taskInput } from "./elements.js";
 import { renderDashboard, renderTasks } from "./render.js";
 import { saveTasksDate, saveTasksToLocal } from "./storage.js";
 
@@ -84,4 +84,9 @@ export function removeTask(id: number): void {
     saveTasksDate();
     renderDashboard();
     renderTasks();
+}
+
+export function resetForm(): void {
+    taskInput.value = "";
+    priorityInput.value = "medium";
 }

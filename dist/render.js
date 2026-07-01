@@ -1,4 +1,4 @@
-import { app, dashboard } from "./main.js";
+import { app, dashboard } from "./elements.js";
 import { getTaskArray, showTaskStatus, removeTask, toggleTask } from "./tasks.js";
 import { date } from "./storage.js";
 export function renderDashboard() {

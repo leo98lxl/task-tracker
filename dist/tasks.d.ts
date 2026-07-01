@@ -8,4 +8,5 @@ export declare function validateTaskInput(name: string): string;
 export declare function newTask(name: string, priority: TaskPriority): void;
 export declare function toggleTask(id: number): void;
 export declare function removeTask(id: number): void;
+export declare function resetForm(): void;
 //# sourceMappingURL=tasks.d.ts.map

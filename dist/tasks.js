@@ -1,4 +1,4 @@
-import { resetForm } from "./main.js";
+import { priorityInput, taskInput } from "./elements.js";
 import { renderDashboard, renderTasks } from "./render.js";
 import { saveTasksDate, saveTasksToLocal } from "./storage.js";
 let nextId = 1;
@@ -70,5 +70,9 @@ export function removeTask(id) {
     saveTasksDate();
     renderDashboard();
     renderTasks();
+}
+export function resetForm() {
+    taskInput.value = "";
+    priorityInput.value = "medium";
 }
 //# sourceMappingURL=tasks.js.map
