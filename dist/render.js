@@ -1,5 +1,5 @@
 import { app, dashboard } from "./main.js";
-import { selectTask } from "./tasks.js";
+import { selectTask, showTaskStatus, removeTask, toggleTask } from "./tasks.js";
 export function renderDashboard() {
     if (app) {
         app.innerHTML = "";

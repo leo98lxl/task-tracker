@@ -1,7 +1,7 @@
-import type { Status, Task, TaskPriority } from "./types.js";
+import type { TaskPriority } from "./types.js";
 import { renderDashboard, renderTasks } from "./render.js";
-import { selectId, selectTask } from "./tasks.js";
-import { loadTasksFromLocal, saveTasksToLocal } from "./storage.js";
+import { newTask, selectId, selectTask, validateTaskInput } from "./tasks.js";
+import { loadTasksFromLocal } from "./storage.js";
 
 function showHeader():void {
     console.log(`===============================`);
@@ -51,73 +51,6 @@ function submitSettings(event: SubmitEvent) {
 function resetForm(): void {
     taskInput.value = "";
     priorityInput.value = "medium";
-}
-
-const showTaskStatus = (status: Status): Task[] => {
-    return tasks.filter((tasks) => tasks.status === status);
-}
-
-function newTask(name: string, priority: TaskPriority): void {
-    const newTask: Task = {
-        id: nextId,
-        name: name,
-        status: "pending",
-        priority: priority,
-    }
-
-    tasks.push(newTask);
-    nextId++;
-    saveTasksToLocal();
-    saveTasksDate();
-    renderDashboard();
-    renderTasks();
-    resetForm();
-}
-
-function validateTaskInput(name: string): string {
-        if (name === "") {
-            return "Task name is required.";
-        }
-        if (name.length < 3) {
-            return "Task name must be longer than 3 characters.";
-        }
-        if (name.length > 40) {
-            return "Task name cannot extend 40 characters.";
-        }
-        if (existingTask(name)) {
-            return "Task name already exists."
-        }
-    return "";
-}
-
-function existingTask(name: string): boolean {
-    for (const task of tasks) {
-        if (task.name.toLowerCase() === name.toLowerCase()) {
-            return true;
-        }
-    }
-    return false;
-}
-
-function toggleTask(id: number): void {
-    for (const task of tasks) {
-        if (task.id === id) {
-            task.status = task.status === "pending" ? "completed" : "pending";
-        }
-    }
-    saveTasksToLocal();
-    saveTasksDate();
-    renderDashboard();
-    renderTasks();
-}
-
-function removeTask(id: number): void {
-    tasks = tasks.filter((task) => task.id !== id);
-
-    saveTasksToLocal();
-    saveTasksDate();
-    renderDashboard();
-    renderTasks();
 }
 
 let date = new Date().toLocaleString("sv-SE");
